@@ -208,9 +208,9 @@ function [E, F] = read(name, object)
             E{1} = csvread(['data/zApproach/' name '/champagne' '/empty/0_right.csv']);
             E{2} = csvread(['data/zApproach/' name '/champagne' '/empty/1_right.csv']);
             E{3} = csvread(['data/zApproach/' name '/champagne' '/empty/2_right.csv']);
-            E{4} = csvread(['data/zApproach/' name '/champagne' '/empty/3_right.csv']);
-            E{5} = csvread(['data/zApproach/' name '/champagne' '/empty/4_right.csv']);
-            E{6} = csvread(['data/zApproach/' name '/champagne' '/empty/5_right.csv']);
+            %E{4} = csvread(['data/zApproach/' name '/champagne' '/empty/3_right.csv']);
+            E{4} = csvread(['data/zApproach/' name '/champagne' '/empty/4_right.csv']);
+            E{5} = csvread(['data/zApproach/' name '/champagne' '/empty/5_right.csv']);
             %
             F{1} = csvread(['data/zApproach/' name '/champagne' '/full/0_right.csv']);
             F{2} = csvread(['data/zApproach/' name '/champagne' '/full/1_right.csv']);
