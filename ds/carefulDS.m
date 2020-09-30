@@ -47,7 +47,8 @@ if plotting
 end
 
 %% Generate a DS for Empty Cups
-default = 1;    % do you want the default parameters?
+% do you want the default parameters?
+default = 1;    
 
 for i=1:length(E3)
     xT = E3{i}(:,end);
@@ -97,7 +98,8 @@ if plotting
 end
 
 %% Generate a DS for Empty Cups
-default = 1;    % do you default parameters?
+% do you default parameters?
+default = 1;    
 
 for i=1:length(F3)
     xT = F3{i}(:,end);
