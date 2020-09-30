@@ -12,12 +12,17 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'new-wine-glass');
+[E, F] = read('Leo', 'wine-glass');
+
+% plotting?
+plotting = 1;
 
 %% Remove Non-Zeros - Empty
-ploty = [];
-plotx = [];
-plotz = [];
+
+if plotting
+    [plotx, ploty, plotz] = deal(0);
+end
+
 for i=1:length(E)
 
     En{i}(:,1) = nonzeros(E{i}(:,2));
@@ -25,27 +30,24 @@ for i=1:length(E)
     En{i}(:,3) = nonzeros(E{i}(:,4));
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
-    E3{i}(3,:) = En{i}(:,3)';         
-    plotx = [plotx, E3{i}(1,:)];
-    ploty = [ploty, E3{i}(2,:)];
-    plotz = [plotz, E3{i}(3,:)];
+    E3{i}(3,:) = En{i}(:,3)';       
     E3{i} = round(E3{i},4);
+    
+    if plotting
+        plotx = [plotx, E3{i}(1,:)];
+        ploty = [ploty, E3{i}(2,:)];
+        plotz = [plotz, E3{i}(3,:)];             
+    end
+
 end
-figure()
-plot3(ploty, plotx, plotz, '.');
+
+if plotting
+    figure;
+    plot3(ploty, plotx, plotz, '.');
+end
 
 %% Generate a DS for Empty Cups
 default = 1;    % do you want the default parameters?
-
-% for i=1:length(Emp3D)
-%     Norm1 = [];
-%     for j=1:length(Emp3D{i})
-%     
-%         norm1 = Emp3D{i}(:,j);
-%         Norm1 = [Norm1; norm(norm1,2)];
-%         Emp3Dnorm{i} = Norm1';
-%     end
-% end
 
 for i=1:length(E3)
     xT = E3{i}(:,end);
@@ -54,6 +56,7 @@ for i=1:length(E3)
         dis = xT - E3{i}(:,j);
         disN = norm(dis,2);
         Norm1 = [Norm1; disN];
+        
         % normalized over distance
         Norm2 = Norm1/max(Norm1);
         
@@ -65,9 +68,11 @@ end
 genDS(Emp3Dnorm, default, [], [], [], 'E', '2D');
 
 %% Remove Non Zeros
-ploty = [];
-plotx = [];
-plotz = [];
+
+if plotting
+    [plotx, ploty, plotz] = deal(0);
+end
+
 for i=1:length(F)
     Fn{i}(:,1) = nonzeros(F{i}(:,2));
     Fn{i}(:,2) = nonzeros(F{i}(:,3));
@@ -78,25 +83,21 @@ for i=1:length(F)
     
     F3{i} = round(F3{i},4);
     
-    plotx = [plotx, F3{i}(1,:)];
-    ploty = [ploty, F3{i}(2,:)];
-    plotz = [plotz, F3{i}(3,:)];
+    if plotting
+        plotx = [plotx, F3{i}(1,:)];
+        ploty = [ploty, F3{i}(2,:)];
+        plotz = [plotz, F3{i}(3,:)];             
+    end
+
 end
-figure()
-plot3(ploty, plotx, plotz, '.');
+
+if plotting
+    figure();
+    plot3(ploty, plotx, plotz, '.');
+end
 
 %% Generate a DS for Empty Cups
 default = 1;    % do you default parameters?
-
-% for i=1:length(Full3D)
-%     Norm1 = [];
-%     for j=1:length(Full3D{i})
-%     
-%         norm1 = Full3D{i}(:,j);
-%         Norm1 = [Norm1; norm(norm1,2)];
-%         Full3Dnorm{i} = Norm1';
-%     end
-% end
 
 for i=1:length(F3)
     xT = F3{i}(:,end);
@@ -105,6 +106,7 @@ for i=1:length(F3)
         dis = xT - F3{i}(:,j);
         disN = norm(dis);
         Norm1 = [Norm1; disN];
+        
         % normalized over distance
         Norm2 = Norm1/max(Norm1);
         
