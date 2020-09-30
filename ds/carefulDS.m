@@ -12,7 +12,7 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'new-red-cup');
+[E, F] = read('Leo', 'new-wine-glass');
 
 %% Remove Non-Zeros - Empty
 ploty = [];
@@ -33,11 +33,6 @@ for i=1:length(E)
 end
 figure()
 plot3(ploty, plotx, plotz, '.');
-
-
-%%
-% plotting = 1;    % do you want to plot the 3D versions?
-% [Emp3D, Emp2Do, Emp2D] = processData(E3, plotting);
 
 %% Generate a DS for Empty Cups
 default = 1;    % do you want the default parameters?
@@ -89,11 +84,6 @@ for i=1:length(F)
 end
 figure()
 plot3(ploty, plotx, plotz, '.');
-
-
-%% 
-% plotting = 1;    % do you want to plot the 3D versions?
-% [Full3D, Full2Do, Full2D] = processData(F3, plotting);
 
 %% Generate a DS for Empty Cups
 default = 1;    % do you default parameters?

@@ -217,7 +217,22 @@ function [E, F] = read(name, object)
             F{3} = csvread(['data/zApproach/' name '/champagne' '/full/2_right.csv']);
             F{4} = csvread(['data/zApproach/' name '/champagne' '/full/3_right.csv']);
             F{5} = csvread(['data/zApproach/' name '/champagne' '/full/4_right.csv']);
-            F{6} = csvread(['data/zApproach/' name '/champagne' '/full/5_right.csv']);            
+            F{6} = csvread(['data/zApproach/' name '/champagne' '/full/5_right.csv']);      
+            
+        elseif strcmp(object, 'new-wine-glass')
+            E{1} = csvread(['data/zApproach/' name '/wine-glass' '/empty/0_right.csv']);
+            E{2} = csvread(['data/zApproach/' name '/wine-glass' '/empty/1_right.csv']);
+            E{3} = csvread(['data/zApproach/' name '/wine-glass' '/empty/2_right.csv']);
+            E{4} = csvread(['data/zApproach/' name '/wine-glass' '/empty/3_right.csv']);
+            E{5} = csvread(['data/zApproach/' name '/wine-glass' '/empty/4_right.csv']);
+            E{6} = csvread(['data/zApproach/' name '/wine-glass' '/empty/5_right.csv']);
+            E{6} = csvread(['data/zApproach/' name '/wine-glass' '/empty/6_right.csv']);
+            %
+            %F{1} = csvread(['data/zApproach/' name '/wine-glass' '/full/0_right.csv']);
+            F{1} = csvread(['data/zApproach/' name '/wine-glass' '/full/1_right.csv']);
+            F{2} = csvread(['data/zApproach/' name '/wine-glass' '/full/2_right.csv']);
+            F{3} = csvread(['data/zApproach/' name '/wine-glass' '/full/3_right.csv']);
+            F{4} = csvread(['data/zApproach/' name '/wine-glass' '/full/4_right.csv']);
             
         elseif strcmp(object,'red-mug')
             E{1} = csvread(['data/' name '/' object '/empty/0_right.csv']);
