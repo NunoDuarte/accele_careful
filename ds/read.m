@@ -103,11 +103,12 @@ function [E, F] = read(name, object)
             E{6} = csvread(['data/zApproach/' name '/' object '/empty/6_right.csv']);
 
             %
-            F{1} = csvread(['data/zApproach/' name '/' object '/full/0_right.csv']);
-            F{2} = csvread(['data/zApproach/' name '/' object '/full/1_right.csv']);
-            F{3} = csvread(['data/zApproach/' name '/' object '/full/2_right.csv']);
-            F{4} = csvread(['data/zApproach/' name '/' object '/full/3_right.csv']);
-            F{5} = csvread(['data/zApproach/' name '/' object '/full/4_right.csv']);
+            F{1} = csvread(['data/zApproach/' name '/' object '/full/1_right.csv']);
+            F{1}(1:100,:) = 0;   
+            F{2} = csvread(['data/zApproach/' name '/' object '/full/2_right.csv']);
+            F{2}(1:100,:) = 0;   
+            F{3} = csvread(['data/zApproach/' name '/' object '/full/3_right.csv']);
+            %F{5} = csvread(['data/zApproach/' name '/' object '/full/4_right.csv']);
 
         elseif strcmp(object,'wine-glass')
             E{1} = csvread(['data/' name '/' object '/empty/0_right.csv']);
