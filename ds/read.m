@@ -222,26 +222,6 @@ function [E, F] = read(name, object)
             F{3}(1:150,:) = 0;   
            
         end
-         
-    % reading data of Bernardo
-    elseif strcmp(name,'Bernardo')
-        if strcmp(object, 'bowl')
-            % Empty
-            E{1} = csvread(['data/' name '/' object '/empty/0_right.csv']);
-            E{2} = csvread(['data/' name '/' object '/empty/1_right.csv']);
-            E{2}(750:end,:) = 0;
-            E{3} = csvread(['data/' name '/' object '/empty/2_right.csv']);
-            
-            E{4} = csvread(['data/' name '/' object '/full/0_right.csv']);
-            E{4}(1000:end,:) = 0;
-            E{5} = csvread(['data/' name '/' object '/full/1_right.csv']);
-            E{5} = csvread(['data/' name '/' object '/full/2_right.csv']);
-            E{6} = csvread(['data/' name '/' object '/full/3_right.csv']);
-            E{7} = csvread(['data/' name '/' object '/full/4_right.csv']);        
-            E{7}(1500:end,:) = 0;
-            
-            F = [];
-        end
            
     % reading data of Athanasios
     elseif strcmp(name,'Athanasios')
@@ -285,10 +265,8 @@ function [E, F] = read(name, object)
             E{7} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
             E{7}(1000:end,:) = 0;
             E{8} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
-%             E{6} = csvread(['data/' 'Kunpeng' '/' 'red-cup' '/empty/0_right.csv']);
-%             E{6}(35:end,:) = 0;
-            
-            
+
+            %
             F{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
             F{2} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
             F{3} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
@@ -301,35 +279,6 @@ function [E, F] = read(name, object)
             F{9}(1300:end,:) = 0;
             F{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
             F{10}(2500:end,:) = 0;   
-%             E{1} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/0_right.csv']);
-%             E{2} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/1_right.csv']);
-%             E{2}(750:end,:) = 0;
-%             E{3} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/2_right.csv']);
-%             E{4} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
-%             E{4}(1000:end,:) = 0;
-%             E{5} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/1_right.csv']);
-%             E{5} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/2_right.csv']);
-%             E{6} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
-%             E{7} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/4_right.csv']);        
-%             E{7}(1500:end,:) = 0;            
-%             E{8} = csvread(['data/' 'Leo' '/' 'red-cup' '/empty/0_right.csv']);
-%             E{8}(1100:end,:) = 0;
-%             E{9} = csvread(['data/' 'Leo' '/' 'red-cup' '/empty/1_right.csv']);             
-%             E{9}(750:end,:) = 0;
-%             E{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/empty/2_right.csv']);
-%             
-%             F{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
-%             F{2} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
-%             F{3} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
-%             F{4} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
-%             F{5} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
-%             F{6} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
-%             F{7} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
-%             F{8} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
-%             F{9} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
-%             F{9}(1300:end,:) = 0;
-%             F{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
-%             F{10}(2500:end,:) = 0;   
             
     elseif strcmp(name,'All-left')
             E{1} = csvread(['data/' 'Kunpeng' '/' 'red-cup' '/empty/0_right.csv']);
