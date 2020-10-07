@@ -3,11 +3,11 @@ clear all
 clc
 
 % change to correct directory
-cd '/home/nuno/Documents/MATLAB/PhD/armMotionDS/fullvsNOTfull/'
+cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
 
 addpath('../SEDS')
+addpath('processing')
 addpath('data')
-addpath('DS')
 addpath('beliefDS')
 addpath('../../Khansari/SEDS/SEDS_lib')
 addpath('../../Khansari/SEDS/GMR_lib')
@@ -29,16 +29,6 @@ test3{1}(2,:) = testXn(:,2)';
 test3{1}(3,:) = testXn(:,3)'; 
 
 %% Center the Data in the Origin
-
-% for i=1:length(test3)
-%     Norm1 = [];
-%     for j=1:length(test3{i})
-%     
-%         norm1 = test3{i}(:,j);
-%         Norm1 = [Norm1; norm(norm1,2)];
-%         test3norm{i} = Norm1';
-%     end
-% end
 
 for i=1:length(test3)
     xT = test3{i}(:,end);
