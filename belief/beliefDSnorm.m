@@ -13,12 +13,12 @@ addpath('../../Khansari/SEDS/SEDS_lib')
 addpath('../../Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('David', 'plastic-cup');
+[E, F] = read('Leo', 'red-cup');
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{5}; 
+testX = F{1}; 
 
 % remove nonzeros
 testXn(:,1) = nonzeros(testX(:,2));
@@ -37,11 +37,20 @@ for i=1:length(test3)
         dis = xT - test3{i}(:,j);
         disN = norm(dis,2);
         Norm1 = [Norm1; disN];
-        test3norm{i} = Norm1';
+        
+        % normalized over distance
+        Norm2 = Norm1/max(Norm1);
+        
+        % flip data to have the acceleration phase at the end
+        Norm2 = flip(Norm2);
+        Emp3Dnorm{i} = Norm2';
     end
 end
 
-[~ , ~, Data, index] = preprocess_demos(test3norm, 0.02, 0.0001); 
+[~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, 0.02, 0.0001); 
+
+% flip Data to start at (0,0);
+Data = flip(Data')';
 
 % testXn = test3{1};
 % testXn = testXn - testXn(:,end);
@@ -57,30 +66,28 @@ end
 % testXnnorm0 = testXnnorm0;
 % testXnnorm0 = round(testXnnorm0,3);
 
-%% Load DS parameters
+%% Load Eigen Vectors
 
-MuE = load('MuE.mat');
-MuE = MuE.Mu;
-PriorsE = load('PriorsE.mat');
-PriorsE = PriorsE.Priors;
 SigmaE = load('SigmaE.mat');
 SigmaE = SigmaE.Sigma;
 
-MuF = load('MuF.mat');
-MuF = MuF.Mu;
-PriorsF = load('PriorsF.mat');
-PriorsF = PriorsF.Priors;
+[Ve,De] = eig(SigmaE);
+Ee1=Ve(:,1); 
+Ee2=Ve(:,2);
+Ed = sqrt(diag(De));
+
 SigmaF = load('SigmaF.mat');
 SigmaF = SigmaF.Sigma;
 
-Mu{1} = MuE;
-Mu{2} = MuF;
+[Vf,Df] = eig(SigmaF);
+Fe1=Vf(:,1); 
+Fe2=Vf(:,2);
+Fd = sqrt(diag(Df));
 
-Priors{1} = PriorsE;
-Priors{2} = PriorsF;
+e2{1} = Ve(:,2);
+e2{2} = Vf(:,2);
 
-Sigma{1} = SigmaE;
-Sigma{2} = SigmaF;
+
 %% Real Velocity of testX
 % dt = 0.02; % frequency 
 % 
@@ -106,7 +113,7 @@ b = [b1, b2];
 b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
-epsilon = 10; % adaptation rate
+epsilon = 0.2; % adaptation rate
 
 d = 1; %dimension of data
 xT = 0;
@@ -117,20 +124,14 @@ B = [B; b];
 Er = [];
 
 K = 0; % out many values to average
-for j = 1:length(testXn)-K-1   
+for j = 1:length(Data)-K-1   
     ee = [0 0];
     for i = 1:2
         
-%         out(:,j) = mean(testXn(1:3,j:j+K),2);
-%         outD(j) = mean(testX_d(1,j:j+K),2);
-%         x0 = norm(out(:,j),2);
-        outD(j) = Data(2,j);
-        x0 = Data(1,j);
-
-        % DS output
-        fn_handle = @(xx) GMR(Priors{i},Mu{i},Sigma{i},xx,1:d,d+1:2*d);
-        [x, xd, tmp, xT]=Simulation(x0,xT,fn_handle,opt_sim); %running the simulator
+        outD(j) = (Data(2,j+1)-Data(2,j))/0.02;
   
+        xd = e2{i}(2)/e2{i}(1);
+        
         % error (real velocity - desired velocity)
         ed = abs(outD(j) - xd(:,1));
         ee(i) = ed;   
@@ -145,7 +146,7 @@ for j = 1:length(testXn)-K-1
     if abs(outD(j)) > 0.15
        [b1_d, w] = max(b_d); 
         if w == 1
-            0
+            0;
         elseif w == 2
             b_dold = b_d;
             b_d(1) = b1_d;
@@ -164,4 +165,5 @@ end
 
 
 
+% probably smooting;
 
