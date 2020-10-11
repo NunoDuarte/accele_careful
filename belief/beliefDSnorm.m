@@ -13,12 +13,12 @@ addpath('../../Khansari/SEDS/SEDS_lib')
 addpath('../../Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'red-cup');
+[E, F] = read('Leo', 'plastic-cup');
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{4}; 
+testX = E{1}; 
 
 % remove nonzeros
 testXn(:,1) = nonzeros(testX(:,2));
@@ -113,7 +113,7 @@ b = [b1, b2];
 b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
-epsilon = 0.5; % adaptation rate
+epsilon = 0.2; % adaptation rate
 
 d = 1; %dimension of data
 xT = 0;
@@ -127,7 +127,7 @@ K = 0; % out many values to average
 for j = 1:length(Data)-K-1   
     ee = [0 0];
 
-    if abs(Data(1,j)) > 0.05
+    if abs(Data(2,j)) > 0.08
         for i = 1:2
 
             outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));

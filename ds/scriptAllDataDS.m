@@ -1,25 +1,26 @@
-function scriptAllDataDS(K)
+function scriptAllDataDS(P)
 
- 
+% P = 0.10;   % percentage train/test
+[train, test] = getData(P);
+Etrain = [];
+Ftrain = [];
+Etest = [];
+Ftest = [];
+for i = 1:length(train)
+    [E, F] = read(train{i}{1}, train{i}{2});
+    Etrain = [Etrain, E];
+    Ftrain = [Ftrain, F];
+end
 
-P = 0.85;   % percentage train/test
-% [train, test] = getData(P);
-% 
-% for i = 1:length(train)
-%     [E, F] = read(train{i}{1}, train{i}{2});
-%     Etrain = [Etrain, E];
-%     Ftrain = [Ftrain, F];
-% end
-% 
-% for i = 1:length(test)
-%     [E, F] = read(test{i}{1}, test{i}{2});
-%     Etest = [Etest, E];
-%     Ftest = [Ftest, F];
-% end
+for i = 1:length(test)
+    [E, F] = read(test{i}{1}, test{i}{2});
+    Etest = [Etest, E];
+    Ftest = [Ftest, F];
+end
 
-[Etrain, Etest, Ftrain, Ftest] = getDataQMUL(P);
-train = Etrain;
-test = Etest;
+% [Etrain, Etest, Ftrain, Ftest] = getDataQMUL(P);
+% train = Etrain;
+% test = Etest;
 
 %% Remove Non-Zeros - Empty
 ploty = [];
@@ -47,32 +48,27 @@ plotting = 0;    % do you want to plot the 3D versions?
 [Emp3D, Emp2Do, Emp2D] = processData(E3, plotting);
 
 %% Generate a DS for Empty Cups
-default = 0;    % do you default parameters?
+% do you want the default parameters?
+default = 1;    
 
-% for i=1:length(Emp3D)
-%     Norm1 = [];
-%     for j=1:length(Emp3D{i})
-%     
-%         norm1 = Emp3D{i}(:,j);
-%         Norm1 = [Norm1; norm(norm1,2)];
-%         Emp3Dnorm{i} = Norm1';
-%     end
-% end
-
-for i=1:length(Emp3D)
-    xT = Emp3D{i}(:,end);
+for i=1:length(E3)
+    xT = E3{i}(:,end);
     Norm1 = [];
-    for j=1:length(Emp3D{i})
-        dis = xT - Emp3D{i}(:,j);
-        disN = norm(dis, 2);
+    for j=1:length(E3{i})
+        dis = xT - E3{i}(:,j);
+        disN = norm(dis,2);
         Norm1 = [Norm1; disN];
-        Emp3Dnorm{i} = Norm1';
+        
+        % normalized over distance
+        Norm2 = Norm1/max(Norm1);
+        
+        % flip data to have the acceleration phase at the end
+        Norm2 = flip(Norm2);
+        Emp3Dnorm{i} = Norm2';
     end
 end
-
-
-genDS(Emp3Dnorm, default, [], K, [], 'E', '2D');
-
+genDS(Emp3Dnorm, default, [], [], [], 'E', '2D');
+K = 1;
 %% Remove Non Zeros
 ploty = [];
 plotx = [];
@@ -100,30 +96,26 @@ plotting = 0;    % do you want to plot the 3D versions?
 [Full3D, Full2Do, Full2D] = processData(F3, plotting);
 
 %% Generate a DS for Empty Cups
-default = 0;    % do you default parameters?
+% do you default parameters?
+default = 1;    
 
-% for i=1:length(Full3D)
-%     Norm1 = [];
-%     for j=1:length(Full3D{i})
-%     
-%         norm1 = Full3D{i}(:,j);
-%         Norm1 = [Norm1; norm(norm1,2)];
-%         Full3Dnorm{i} = Norm1';
-%     end
-% end
-
-for i=1:length(Full3D)
-    xT = Full3D{i}(:,end);
+for i=1:length(F3)
+    xT = F3{i}(:,end);
     Norm1 = [];
-    for j=1:length(Full3D{i})
-        dis = xT - Full3D{i}(:,j);
+    for j=1:length(F3{i})
+        dis = xT - F3{i}(:,j);
         disN = norm(dis);
         Norm1 = [Norm1; disN];
-        Full3Dnorm{i} = Norm1';
+        
+        % normalized over distance
+        Norm2 = Norm1/max(Norm1);
+        
+        % flip data to have the acceleration phase at the end
+        Norm2 = flip(Norm2);
+        Full3Dnorm{i} = Norm2';
     end
 end
-
-genDS(Full3Dnorm, default, [], K, [], 'F', '2D');
+genDS(Full3Dnorm, default, [], [], [], 'F', '2D');
 
 %% save figures
 
@@ -136,19 +128,19 @@ filename = ['/output/train/F-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-M
 saveas(f2, [pwd, filename]);
 
 % labels to know which object
-Train = {'QMUL_data', ' '};
-Test = {'QMUL data', ' '};
-% Train = [];
-% for i = 1:length(train)
-%     Train = [Train; train{i}];
-% end
-% Train = [Train; {' ', ' '}];
-% 
-% Test = [];
-% for i = 1:length(test)
-%     Test = [Test; test{i}];
-% end
-% Test = [Test; {' ', ' '}];
+% Train = {'QMUL_data', ' '};
+% Test = {'QMUL data', ' '};
+Train = [];
+for i = 1:length(train)
+    Train = [Train; train{i}];
+end
+Train = [Train; {' ', ' '}];
+
+Test = [];
+for i = 1:length(test)
+    Test = [Test; test{i}];
+end
+Test = [Test; {' ', ' '}];
 
 
 %% Classification
