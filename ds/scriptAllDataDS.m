@@ -1,4 +1,4 @@
-function scriptAllDataDS(P)
+function scriptAllDataDS(P, minVel, epsi)
 
 % P = 0.10;   % percentage train/test
 [train, test] = getData(P);
@@ -145,14 +145,17 @@ Test = [Test; {' ', ' '}];
 
 %% Classification
 
-scriptAllDataBelief
+[trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
+    testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
+    F1_train, F1_test] = ....
+    scriptAllDataBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsi);
 
 ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
 ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
 F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
 
 t = table([Train; Test; ConfTrain; ConfTest; F1], 'VariableNames', {'Train_Test_dataset'});
-filename = ['output/train/dataset-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsi) '-' datestr(now,'mm-dd-yyyy')];
 writetable(t, [filename '.txt']);
 
 %% 

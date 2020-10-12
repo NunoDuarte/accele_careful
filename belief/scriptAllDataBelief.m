@@ -1,5 +1,7 @@
-%% Load Path
-
+function [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
+    testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
+    F1_train, F1_test] = ....
+        scriptAllDataBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsi)
 clc
 
 addpath('../SEDS')
@@ -32,8 +34,8 @@ Sigma{1} = SigmaE;
 Sigma{2} = SigmaF;
 
 %% Classify train data
-[classEtrain, outEtrain] = fun_beliefDSnorm(Etrain, Priors, Mu, Sigma);
-[classFtrain, outFtrain] = fun_beliefDSnorm(Ftrain, Priors, Mu, Sigma);
+[classEtrain, outEtrain] = fun_beliefDSnorm(Etrain, Priors, Mu, Sigma, minVel, epsi);
+[classFtrain, outFtrain] = fun_beliefDSnorm(Ftrain, Priors, Mu, Sigma, minVel, epsi);
 
 % Output Confusion Matrix
 
@@ -43,8 +45,8 @@ trainTrueNeg = classFtrain(2)
 trainFalseNeg = classFtrain(1)
 
 %% Classify train data
-[classEtest, outEtest] = fun_beliefDSnorm(Etest, Priors, Mu, Sigma);
-[classFtest, outFtest] = fun_beliefDSnorm(Ftest, Priors, Mu, Sigma);
+[classEtest, outEtest] = fun_beliefDSnorm(Etest, Priors, Mu, Sigma, minVel, epsi);
+[classFtest, outFtest] = fun_beliefDSnorm(Ftest, Priors, Mu, Sigma, minVel, epsi);
 
 % Output Confusion Matrix
 
