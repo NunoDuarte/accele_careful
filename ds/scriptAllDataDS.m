@@ -155,7 +155,7 @@ ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg,
 F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
 
 t = table([Train; Test; ConfTrain; ConfTest; F1], 'VariableNames', {'Train_Test_dataset'});
-filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsi) '-' datestr(now,'mm-dd-yyyy')];
+filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsi) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
 writetable(t, [filename '.txt']);
 
 %% 
