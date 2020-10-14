@@ -285,10 +285,14 @@ function [E, F] = read(name, object)
             E{2}(200:end,:) = 0;                         
             E{3} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/1_right.csv']);      
             E{4} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/1_right.csv']);
-            %E{5} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/2_right.csv']);
-            %E{6} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/2_right.csv']);
-            %E{7} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
-            %E{8} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
+            E{5} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/2_right.csv']);
+            E{6} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/2_right.csv']);
+            E{6}(1:100,:) = 0;                         
+            E{7} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
+            E{7}(1:120,:) = 0;                         
+            E{7}(200:end,:) = 0;                         
+            E{8} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
+            E{8}(1:50,:) = 0;                         
 
             %
             F{1} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
