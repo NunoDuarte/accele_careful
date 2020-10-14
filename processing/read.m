@@ -280,31 +280,39 @@ function [E, F] = read(name, object)
          end
 
     elseif strcmp(name,'All')
-            E{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/empty/1_right.csv']);             
-            E{1}(750:end,:) = 0;       
-            E{2} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/0_right.csv']);
-            E{3} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/1_right.csv']);
-            E{3}(750:end,:) = 0;            
-            E{4} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/1_right.csv']);
-            E{5} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/2_right.csv']);     
-            E{6} = csvread(['data/' 'Bernardo' '/' 'bowl' '/empty/2_right.csv']);
-            E{7} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
-            E{7}(1000:end,:) = 0;
-            E{8} = csvread(['data/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
+            E{1} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/empty/1_right.csv']);
+            E{2} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/0_right.csv']);
+            E{2}(200:end,:) = 0;                         
+            E{3} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/1_right.csv']);      
+            E{4} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/1_right.csv']);
+            %E{5} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/2_right.csv']);
+            %E{6} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/empty/2_right.csv']);
+            %E{7} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/0_right.csv']);
+            %E{8} = csvread(['data/zApproach/' 'Bernardo' '/' 'bowl' '/full/3_right.csv']);
 
             %
-            F{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
-            F{2} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
-            F{3} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
-            F{4} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
-            F{5} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
-            F{6} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
-            F{7} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
-            F{8} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
-            F{9} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
-            F{9}(1300:end,:) = 0;
-            F{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
-            F{10}(2500:end,:) = 0;   
+            F{1} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
+%             F{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
+            F{2} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
+            %F{2} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
+            F{3} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
+            %F{3} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
+            F{4} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
+            %F{4} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
+            F{5} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
+            %F{5} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
+            F{6} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
+            %F{6} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
+            F{7} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
+            %F{7} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
+            F{8} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
+            %F{8} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
+            F{9} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
+            %F{9} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
+            %F{9}(1300:end,:) = 0;
+            F{10} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
+            %F{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
+            %F{10}(2500:end,:) = 0;   
             
     elseif strcmp(name,'All-left')
             E{1} = csvread(['data/' 'Kunpeng' '/' 'red-cup' '/empty/0_right.csv']);
