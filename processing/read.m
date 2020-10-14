@@ -296,27 +296,24 @@ function [E, F] = read(name, object)
 
             %
             F{1} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
-%             F{1} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/2_right.csv']);
+            F{1}(1:50,:) = 0;   
             F{2} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
-            %F{2} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/0_right.csv']);
+            F{2}(200:end,:) = 0;   
             F{3} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
-            %F{3} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/1_right.csv']);
+            F{3}(1:230,:) = 0;   
             F{4} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
-            %F{4} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/2_right.csv']);
             F{5} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
-            %F{5} = csvread(['data/' 'Salman' '/' 'red-mug' '/full/3_right.csv']);
+            F{5}(1:350,:) = 0;   
             F{6} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
-            %F{6} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/0_right.csv']);
+            F{6}(1:50,:) = 0;   
             F{7} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
-            %F{7} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/1_right.csv']);
+            F{7}(1:275,:) = 0;   
             F{8} = csvread(['data/zApproach/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
-            %F{8} = csvread(['data/' 'Salman' '/' 'red-mug' '/empty/3_right.csv']);
+            F{8}(1:290,:) = 0;   
             F{9} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
-            %F{9} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/1_right.csv']);
-            %F{9}(1300:end,:) = 0;
+            F{9}(1:100,:) = 0;   
             F{10} = csvread(['data/zApproach/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
-            %F{10} = csvread(['data/' 'Leo' '/' 'red-cup' '/full/3_right.csv']);
-            %F{10}(2500:end,:) = 0;   
+            F{10}(1:100,:) = 0;   
             
     elseif strcmp(name,'All-left')
             E{1} = csvread(['data/' 'Kunpeng' '/' 'red-cup' '/empty/0_right.csv']);
