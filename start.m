@@ -5,21 +5,29 @@
 clear
 clc
 
-addpath('../SEDS')
 addpath('data')
 addpath('DS')
 addpath('beliefDS')
-addpath('../../Khansari/SEDS/SEDS_lib')
-addpath('../../Khansari/SEDS/GMR_lib')
+addpath('../../software/Khansari/SEDS/SEDS_lib')
+addpath('../../software/Khansari/SEDS/GMR_lib')
 
 %% 
 
-K = [6, 7, 8];
+P = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4];
 
-for i=1:4
-    for k = 1:length(K)
+minVel = [0.02, 0.04, 0.06, 0.08, 0.10, 0.12];
+epsi = [0.1, 0.2, 0.3];
 
-       scriptAllDataDS(K(k))
-       close all;
+for j = 1:2
+    for m = 1:length(minVel)
+
+        for n = 1:length(epsi)
+
+            for i=1:length(P)
+
+               scriptAllDataDS(P(i), minVel(m), epsi(n))
+               close all;
+            end
+        end
     end
 end
