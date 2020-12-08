@@ -8,6 +8,7 @@ clc
 addpath('data')
 addpath('DS')
 addpath('beliefDS')
+addpath('processing')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
