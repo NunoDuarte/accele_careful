@@ -5,17 +5,18 @@
 clear
 clc
 
-addpath('../SEDS')
 addpath('DS')
+addpath('processing')
 addpath('data')
+addpath('beliefDS')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'wine-glass');
+[E, F] = read('All', 'plastic-cup');
 
 % plotting?
-plotting = 1;
+plotting = 0;
 
 %% Remove Non-Zeros - Empty
 
