@@ -1,4 +1,5 @@
 # Acceleration Phase Carefulness Detection
+- Utilize the acceleration phase during handover actions to detect whether the manipulated object is soft/heavy/fragile/risky 
 
 - Eigen vectors in the acceleration phase
 
