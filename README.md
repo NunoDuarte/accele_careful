@@ -5,3 +5,6 @@ Utilize the acceleration phase during handover actions to detect whether the man
 
 Check that it is solved:
 I have to find a way to get the data to match the eigen vectors. Perhaps smoothing, or time intervals
+
+## Relevant Information
+Deceleration phase Approach ([GitHub repository](https://github.com/NunoDuarte/carefull-detection))
