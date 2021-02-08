@@ -1,26 +1,4 @@
-function scriptAllDataDS(P, minVel, epsi)
-
-    % P = 0.10;   % percentage train/test
-    [train, test] = getData(P);
-    Etrain = [];
-    Ftrain = [];
-    Etest = [];
-    Ftest = [];
-    for i = 1:length(train)
-        [E, F] = read(train{i}{1}, train{i}{2});
-        Etrain = [Etrain, E];
-        Ftrain = [Ftrain, F];
-    end
-
-    for i = 1:length(test)
-        [E, F] = read(test{i}{1}, test{i}{2});
-        Etest = [Etest, E];
-        Ftest = [Ftest, F];
-    end
-
-    % [Etrain, Etest, Ftrain, Ftest] = getDataQMUL(P);
-    % train = Etrain;
-    % test = Etest;
+function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, plots)
 
     %% Remove Non-Zeros - Empty
     ploty = [];
@@ -69,6 +47,7 @@ function scriptAllDataDS(P, minVel, epsi)
     end
     genDS(Emp3Dnorm, default, [], [], [], 'E', '2D');
     K = 1;
+    
     %% Remove Non Zeros
     ploty = [];
     plotx = [];
@@ -119,13 +98,15 @@ function scriptAllDataDS(P, minVel, epsi)
 
     %% save figures
 
-    f1 = figure(1);
-    filename = ['/output/train/E-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
-    saveas(f1, [pwd, filename]);
+    if plots
+        f1 = figure(1);
+        filename = ['/output/train/E-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        saveas(f1, [pwd, filename]);
 
-    f2 = figure(2);
-    filename = ['/output/train/F-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
-    saveas(f2, [pwd, filename]);
+        f2 = figure(2);
+        filename = ['/output/train/F-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        saveas(f2, [pwd, filename]);
+    end
 
     % labels to know which object
     % Train = {'QMUL_data', ' '};
@@ -148,14 +129,15 @@ function scriptAllDataDS(P, minVel, epsi)
     [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
         testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
         F1_train, F1_test] = ....
-        scriptAllDataBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsi);
+        scriptBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsilon);
 
     ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
     ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
+    F0 = {'Epsilon ',  ' ' ; epsilon, []};
     F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
 
-    t = table([Train; Test; ConfTrain; ConfTest; F1], 'VariableNames', {'Train_Test_dataset'});
-    filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsi) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+    t = table([Train; Test; ConfTrain; ConfTest; F0; F1], 'VariableNames', {'Train_Test_dataset'});
+    filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsilon) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
     writetable(t, [filename '.txt']);
 
     %% 

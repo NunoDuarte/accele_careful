@@ -7,7 +7,8 @@ cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
 
 addpath('processing')
 addpath('data')
-addpath('beliefDS')
+addpath('ds')
+addpath('belief')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
@@ -126,7 +127,7 @@ K = 0; % out many values to average
 for j = 1:length(Data)-K-1   
     ee = [0 0];
 
-    if abs(Data(2,j)) > 0.17
+    if abs(Data(2,j)) > 0
         for i = 1:2
 
             outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));
