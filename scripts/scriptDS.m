@@ -130,15 +130,19 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
         testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
         F1_train, F1_test] = ....
         scriptBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsilon);
+    
+    % Add if statement to filter results
+    if (trainTruePos > 0.75 && trainTrueNeg > 0.75 && testTruePos > 0.75 && testTrueNeg > 0.75)
 
-    ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
-    ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
-    F0 = {'Epsilon ',  ' ' ; epsilon, []};
-    F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
+        ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
+        ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
+        F0 = {'Epsilon ',  ' ' ; epsilon, []};
+        F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
 
-    t = table([Train; Test; ConfTrain; ConfTest; F0; F1], 'VariableNames', {'Train_Test_dataset'});
-    filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsilon) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
-    writetable(t, [filename '.txt']);
+        t = table([Train; Test; ConfTrain; ConfTest; F0; F1], 'VariableNames', {'Train_Test_dataset'});
+        filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsilon) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        writetable(t, [filename '.txt']);
+    end
 
     %% 
 
