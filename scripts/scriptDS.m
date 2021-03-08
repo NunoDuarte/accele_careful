@@ -109,22 +109,22 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
 
     %% labels to know which object
     % Train = {'QMUL_data', ' '};
-    Test = {'QMUL data', ' '};
+%     Test = {'QMUL data', ' '};
     
     % ----
 
-    % EPFL
+    % EPFL + QMUL
     Train = [];
     for i = 1:length(train)
         Train = [Train; train{i}];
     end
     Train = [Train; {' ', ' '}];
 
-%     Test = [];
-%     for i = 1:length(test)
-%         Test = [Test; test{i}];
-%     end
-%     Test = [Test; {' ', ' '}];
+    Test = [];
+    for i = 1:length(test)
+        Test = [Test; test{i}];
+    end
+    Test = [Test; {' ', ' '}];
 
 
     %% Classification
@@ -135,7 +135,8 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
         scriptBelief(Etrain, Ftrain, Etest, Ftest, minVel, epsilon);
     
     % Add if statement to filter results
-    if (trainTruePos >= 0.4 && trainTrueNeg >= 0.4 && testTruePos >= 0.4 && testTrueNeg >= 0.4)
+    %if ((trainTruePos >= 0.6 && trainTrueNeg >= 0.6) && (testTruePos >= 0.8 || testTrueNeg >= 0.8))
+    if (testTruePos >= 0.5 && testTrueNeg >= 0.5)
 
         ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
         ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};

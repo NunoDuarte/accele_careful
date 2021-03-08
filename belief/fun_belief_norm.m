@@ -55,12 +55,14 @@ function [Classification, trainClass] = fun_belief_norm(Data, Priors, Mu, Sigma,
 %         end
         %% Load Eigen Vectors
 
-        [Ve,De] = eig(Sigma{1});
+        % pick 1st gaussian
+        [Ve,De] = eig(Sigma{1}(:,:,1));
         Ee1=Ve(:,1); 
         Ee2=Ve(:,2);
         Ed = sqrt(diag(De));
 
-        [Vf,Df] = eig(Sigma{2});
+        % pick 1st gaussian
+        [Vf,Df] = eig(Sigma{2}(:,:,1));
         Fe1=Vf(:,1); 
         Fe2=Vf(:,2);
         Fd = sqrt(diag(Df));
