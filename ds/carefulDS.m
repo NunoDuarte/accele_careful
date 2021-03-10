@@ -5,18 +5,19 @@
 clear
 clc
 
-addpath('DS')
+addpath('ds')
 addpath('processing')
 addpath('data')
-addpath('beliefDS')
+addpath('belief')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('All', 'plastic-cup');
+% [E, F] = read('Athanasios', 'champagne');
+readQMUL;
 
 % plotting?
-plotting = 0;
+plotting = 1;
 
 %% Remove Non-Zeros - Empty
 
@@ -98,7 +99,7 @@ if plotting
     plot3(ploty, plotx, plotz, '.');
 end
 
-%% Generate a DS for Empty Cups
+%% Generate a DS for Full Cups
 % do you default parameters?
 default = 1;    
 

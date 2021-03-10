@@ -13,12 +13,13 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('David', 'big-plastic-cup');
+%[E, F] = read('David', 'big-plastic-cup');
+readQMUL;
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{5}; 
+testX = E{1}; 
 
 % remove nonzeros
 testXn(:,1) = nonzeros(testX(:,2));
@@ -71,7 +72,7 @@ Data = flip(Data')';
 SigmaE = load('SigmaE.mat');
 SigmaE = SigmaE.Sigma;
 
-[Ve,De] = eig(SigmaE);
+[Ve,De] = eig(SigmaE(:,:,1));
 Ee1=Ve(:,1); 
 Ee2=Ve(:,2);
 Ed = sqrt(diag(De));
@@ -79,7 +80,7 @@ Ed = sqrt(diag(De));
 SigmaF = load('SigmaF.mat');
 SigmaF = SigmaF.Sigma;
 
-[Vf,Df] = eig(SigmaF);
+[Vf,Df] = eig(SigmaF(:,:,1));
 Fe1=Vf(:,1); 
 Fe2=Vf(:,2);
 Fd = sqrt(diag(Df));

@@ -1,10 +1,10 @@
-function genDS(F, default, options, K, ~, type, dim)
+function K = genDS(F, default, options, K, ~, type, dim)
 
     if default
         %% User Parameters and Setting
         sim = 0; % simulate
         % Training parameters
-        K = 1; % Number of Gaussian functions
+        K = 2; % Number of Gaussian functions
 
         % A set of options that will be passed to the solver. Please type 
         % 'doc preprocess_demos' in the MATLAB command window to get detailed
