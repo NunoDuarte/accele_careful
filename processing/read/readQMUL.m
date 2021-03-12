@@ -1,4 +1,4 @@
-files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/1/*.csv');
+files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/2/*.csv');
 fullpaths = fullfile({files.folder}, {files.name});
 
 % Empty Cups
