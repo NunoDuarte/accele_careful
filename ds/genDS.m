@@ -1,10 +1,10 @@
-function K = genDS(F, default, options, K, ~, type, dim)
+function K = genDS(F, default, options, K, ~, samp_freq, type, dim)
 
     if default
         %% User Parameters and Setting
         sim = 0; % simulate
         % Training parameters
-        K = 2; % Number of Gaussian functions
+        K = 1; % Number of Gaussian functions
 
         % A set of options that will be passed to the solver. Please type 
         % 'doc preprocess_demos' in the MATLAB command window to get detailed
@@ -41,7 +41,7 @@ function K = genDS(F, default, options, K, ~, type, dim)
 
     %% Run SEDS solver
 
-    [tmp , tmp, Data, index] = preprocess_demos(F, 0.02, 0.0001); %preprocessing data
+    [tmp , tmp, Data, index] = preprocess_demos(F, samp_freq, 0.0001); %preprocessing data
 
     Datanew = [];
     % Add this to extract just the acceleration phase
