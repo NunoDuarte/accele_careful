@@ -1,4 +1,4 @@
-function [Classification, trainClass] = fun_belief_norm(Data, Priors, Mu, Sigma, minVel, epsi)
+function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, minVel, epsi)
     %% Belief System for 2 DS
     
     for k = 1:length(Data)
@@ -30,7 +30,7 @@ function [Classification, trainClass] = fun_belief_norm(Data, Priors, Mu, Sigma,
             end
         end
 
-        [~ , ~, dataProcess, index] = preprocess_demos(Emp3Dnorm, 0.02, 0.0001); 
+        [~ , ~, dataProcess, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
 
         % flip Data to start at (0,0);
         dataProcess = flip(dataProcess')';
