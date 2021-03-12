@@ -19,7 +19,7 @@ readQMUL;
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = E{1}; 
+testX = F{6}; 
 
 % remove nonzeros
 testXn(:,1) = nonzeros(testX(:,2));
@@ -47,8 +47,9 @@ for i=1:length(test3)
         Emp3Dnorm{i} = Norm2';
     end
 end
-
-[~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, 0.02, 0.0001); 
+samp_freq = 1/10; % for QMUL data
+%samp_freq = 1/50; % for EPFL data
+[~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
 
 % flip Data to start at (0,0);
 Data = flip(Data')';
@@ -114,7 +115,7 @@ b = [b1, b2];
 b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
-epsilon = 0.3; % adaptation rate
+epsilon = 0.8; % adaptation rate
 
 d = 1; %dimension of data
 xT = 0;

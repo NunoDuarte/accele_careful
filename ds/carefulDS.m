@@ -68,7 +68,9 @@ for i=1:length(E3)
         Emp3Dnorm{i} = Norm2';
     end
 end
-genDS(Emp3Dnorm, default, [], [], [], 'E', '2D');
+samp_freq = 0.1; % for QMUL data
+%samp_freq = 1/50; % for EPFL data
+genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E', '2D');
 
 %% Remove Non Zeros
 
@@ -119,6 +121,6 @@ for i=1:length(F3)
         Full3Dnorm{i} = Norm2';
     end
 end
-genDS(Full3Dnorm, default, [], [], [], 'F', '2D');
+genDS(Full3Dnorm, default, [], [], [], samp_freq, 'F', '2D');
 
 
