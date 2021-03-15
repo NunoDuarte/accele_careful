@@ -4,7 +4,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type, dim)
         %% User Parameters and Setting
         sim = 0; % simulate
         % Training parameters
-        K = 1; % Number of Gaussian functions
+        K = 3; % Number of Gaussian functions
 
         % A set of options that will be passed to the solver. Please type 
         % 'doc preprocess_demos' in the MATLAB command window to get detailed
@@ -47,6 +47,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type, dim)
     % Add this to extract just the acceleration phase
     id = find(Data(1,:) == 0);
     for i=1:length(id)
+        % extract the data until it reaches the maximum velocity
         if i == 1
             [maxVel, idVel] = max(Data(2,1:id(1)));
             count = 0;
