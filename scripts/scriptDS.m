@@ -135,8 +135,8 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
         scriptBelief(Etrain, Ftrain, Etest, Ftest, samp_freq, minVel, epsilon);
     
     % Add if statement to filter results
-    if ((trainTruePos >= 0.6 && trainTrueNeg >= 0.6) && (testTruePos >= 0.6 && testTrueNeg >= 0.6))
-    %if (testTruePos >= 0.3 && testTrueNeg >= 0.3)
+    %if ((trainTruePos >= 0.3 && trainTrueNeg >= 0.3) && (testTruePos >= 0.3 && testTrueNeg >= 0.3))
+    if (testTruePos >= 0.75 && testTrueNeg >= 0.75)
 
         ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
         ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
