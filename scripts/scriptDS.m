@@ -136,7 +136,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
     
     % Add if statement to filter results
     %if ((trainTruePos >= 0.3 && trainTrueNeg >= 0.3) && (testTruePos >= 0.3 && testTrueNeg >= 0.3))
-    if (testTruePos >= 0.75 && testTrueNeg >= 0.75)
+    if (testTruePos >= 0.70 && testTrueNeg >= 0.70)
 
         ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
         ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
