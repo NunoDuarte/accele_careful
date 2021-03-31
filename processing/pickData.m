@@ -30,12 +30,12 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
         testE{i} = {'1-fu0', fullpaths{indexE(i)}(end-7:end-4)};
     end
     % Full Cups
-    fu2 = strfind(fullpaths, 'fi3fu2b1');
+    fu2 = strfind(fullpaths, 'fi3fu2');
     indexF = find(~cellfun(@isempty,fu2));
     for i=1:length(indexF)
 
         F{i} = csvread(fullpaths{indexF(i)});
-        testF{i} = {'1-fi3fu2b1', fullpaths{indexE(i)}(end-7:end-4)};
+        testF{i} = {'1-fi3fu2', fullpaths{indexE(i)}(end-7:end-4)};
     end        
     
     % #### 2
@@ -51,12 +51,12 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
         testE{i+4} = {'2-fu0', fullpaths{indexE(i)}(end-7:end-4)};
     end
     % Full Cups
-    fu2 = strfind(fullpaths, 'fi3fu2b1');
+    fu2 = strfind(fullpaths, 'fi3fu2');
     indexF = find(~cellfun(@isempty,fu2));
     for i=1:length(indexF)
 
-        F{i+2} = csvread(fullpaths{indexF(i)});
-        testF{i+2} = {'2-fi3fu2b1', fullpaths{indexE(i)}(end-7:end-4)};
+        F{i+4} = csvread(fullpaths{indexF(i)});
+        testF{i+4} = {'2-fi3fu2', fullpaths{indexE(i)}(end-7:end-4)};
     end
     
     % #### 4
@@ -72,12 +72,12 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
         testE{i+8} = {'4-fu0', fullpaths{indexE(i)}(end-7:end-4)};
     end
     % Full Cups
-    fu2 = strfind(fullpaths, 'fi3fu2b1');
+    fu2 = strfind(fullpaths, 'fi3fu2');
     indexF = find(~cellfun(@isempty,fu2));
     for i=1:length(indexF)
 
-        F{i+4} = csvread(fullpaths{indexF(i)});
-        testF{i+4} = {'4-fi3fu2b1', fullpaths{indexE(i)}(end-7:end-4)};
+        F{i+8} = csvread(fullpaths{indexF(i)});
+        testF{i+8} = {'4-fi3fu2', fullpaths{indexE(i)}(end-7:end-4)};
     end
     
     % #### 5
@@ -93,12 +93,12 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
         testE{i+12} = {'5-fu0', fullpaths{indexE(i)}(end-7:end-4)};
     end
     % Full Cups
-    fu2 = strfind(fullpaths, 'fi3fu2b1');
+    fu2 = strfind(fullpaths, 'fi3fu2');
     indexF = find(~cellfun(@isempty,fu2));
     for i=1:length(indexF)-1
 
-        F{i+6} = csvread(fullpaths{indexF(i)});
-        testF{i+6} = {'5-fi3fu2b1', fullpaths{indexE(i)}(end-7:end-4)};
+        F{i+12} = csvread(fullpaths{indexF(i)});
+        testF{i+12} = {'5-fi3fu2', fullpaths{indexE(i)}(end-7:end-4)};
     end
        
     %% pick train
