@@ -1,4 +1,4 @@
-function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon, plots)
+function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon, plots, freq)
 
     %% Remove Non-Zeros - Empty
     ploty = [];
@@ -25,8 +25,9 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
     plotting = 0;    % do you want to plot the 3D versions?
     [Emp3D, Emp2Do, Emp2D] = processData(E3, plotting);
 
-    %% do you want the default parameters? No
-    default = 0;    
+    %% CHECK THE PARAMETERS 
+    default = 0;    % No default
+    samp_freq_train = freq.train;
     
     %% Generate a DS for Empty Cups
     for i=1:length(E3)
@@ -45,11 +46,8 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
             Emp3Dnorm{i} = Norm2';
         end
     end
-    
-    %samp_freq = 0.1; % for QMUL data
-    samp_freq = 1/50; % for EPFL data
 
-    K = genDS(Emp3Dnorm, default, [], K, [], samp_freq, 'E');
+    K = genDS(Emp3Dnorm, default, [], K, [], samp_freq_train, 'E');
     
     %% Remove Non Zeros
     ploty = [];
@@ -74,7 +72,6 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
 
 
     %% 
-    plotting = 0;    % do you want to plot the 3D versions?
     [Full3D, Full2Do, Full2D] = processData(F3, plotting);
 
     %% Generate a DS for Full Cups   
@@ -95,7 +92,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
             Full3Dnorm{i} = Norm2';
         end
     end
-    genDS(Full3Dnorm, default, [], K, [], samp_freq, 'F');
+    genDS(Full3Dnorm, default, [], K, [], samp_freq_train, 'F');
 
     %% save figures
 
@@ -130,7 +127,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
     [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
         testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
         F1_train, F1_test] = ....
-        scriptBelief(Etrain, Ftrain, Etest, Ftest, samp_freq, minVel, epsilon);
+        scriptBelief(Etrain, Ftrain, Etest, Ftest, freq, minVel, epsilon);
     
     % Add if statement to filter results
     if ((trainTruePos >= 0.62 && trainTrueNeg >= 0.84) && (testTruePos >= 0.4 && testTrueNeg >= 0.5))

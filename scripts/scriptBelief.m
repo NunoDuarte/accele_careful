@@ -1,7 +1,7 @@
 function [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
     testTruePos, testFalsePos, testTrueNeg, testFalseNeg, ....
     F1_train, F1_test] = ....
-        scriptBelief(Etrain, Ftrain, Etest, Ftest, samp_freq, minVel, epsi)
+        scriptBelief(Etrain, Ftrain, Etest, Ftest, freq, minVel, epsi)
     clc
 
     %% Load Eigen parameters
@@ -14,10 +14,14 @@ function [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
     
     Sigma{1} = SigmaE;
     Sigma{2} = SigmaF;
+    
+    %% CHECK PARAMETERS
+    samp_freq_train = freq.train;    
+    samp_freq_test = freq.test;    
 
     %% Classify train data
-    [classEtrain, outEtrain] = fun_belief_norm(Etrain, Sigma, samp_freq, minVel, epsi);
-    [classFtrain, outFtrain] = fun_belief_norm(Ftrain, Sigma, samp_freq, minVel, epsi);
+    [classEtrain, outEtrain] = fun_belief_norm(Etrain, Sigma, samp_freq_train, minVel, epsi);
+    [classFtrain, outFtrain] = fun_belief_norm(Ftrain, Sigma, samp_freq_train, minVel, epsi);
 
     % Output Confusion Matrix
 
@@ -27,9 +31,8 @@ function [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
     trainFalseNeg = classFtrain(1);
 
     %% Classify test data
-%     samp_freq = 1/10; % for QMUL data
-    [classEtest, outEtest] = fun_belief_norm(Etest, Sigma, samp_freq, minVel, epsi);
-    [classFtest, outFtest] = fun_belief_norm(Ftest, Sigma, samp_freq, minVel, epsi);
+    [classEtest, outEtest] = fun_belief_norm(Etest, Sigma, samp_freq_test, minVel, epsi);
+    [classFtest, outFtest] = fun_belief_norm(Ftest, Sigma, samp_freq_test, minVel, epsi);
 
     % Output Confusion Matrix
     testTruePos = classEtest(1);

@@ -14,7 +14,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
         options.objective = 'likelihood';    % 'likelihood': use likelihood as criterion to
 
     else
-        options.tol_mat_bias = 10^-5; % A very small positive scalar to avoid
+        options.tol_mat_bias = 10^-3; % A very small positive scalar to avoid
         options.display = 1;          % An option to control whether the algorithm
         options.tol_stopping= 10^-10;  % A small positive scalar defining the stoppping
         options.max_iter = 1000;       % Maximum number of iteration for the solver [default: i_max=1000]
