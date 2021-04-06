@@ -1,4 +1,4 @@
-function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, plots)
+function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon, plots)
 
     %% Remove Non-Zeros - Empty
     ploty = [];
@@ -25,10 +25,10 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
     plotting = 0;    % do you want to plot the 3D versions?
     [Emp3D, Emp2Do, Emp2D] = processData(E3, plotting);
 
+    %% do you want the default parameters? No
+    default = 0;    
+    
     %% Generate a DS for Empty Cups
-    % do you want the default parameters?
-    default = 1;    
-
     for i=1:length(E3)
         xT = E3{i}(:,end);
         Norm1 = [];
@@ -49,7 +49,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
     %samp_freq = 0.1; % for QMUL data
     samp_freq = 1/50; % for EPFL data
 
-    K = genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E', '2D');
+    K = genDS(Emp3Dnorm, default, [], K, [], samp_freq, 'E');
     
     %% Remove Non Zeros
     ploty = [];
@@ -77,9 +77,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
     plotting = 0;    % do you want to plot the 3D versions?
     [Full3D, Full2Do, Full2D] = processData(F3, plotting);
 
-    %% Generate a DS for Empty Cups
-    % do you default parameters?
-    default = 1;    
+    %% Generate a DS for Full Cups   
 
     for i=1:length(F3)
         xT = F3{i}(:,end);
@@ -97,7 +95,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
             Full3Dnorm{i} = Norm2';
         end
     end
-    genDS(Full3Dnorm, default, [], [], [], samp_freq, 'F', '2D');
+    genDS(Full3Dnorm, default, [], K, [], samp_freq, 'F');
 
     %% save figures
 
@@ -135,8 +133,8 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
         scriptBelief(Etrain, Ftrain, Etest, Ftest, samp_freq, minVel, epsilon);
     
     % Add if statement to filter results
-    %if ((trainTruePos >= 0.3 && trainTrueNeg >= 0.3) && (testTruePos >= 0.3 && testTrueNeg >= 0.3))
-    if (testTruePos >= 0.70 && testTrueNeg >= 0.70)
+    if ((trainTruePos >= 0.62 && trainTrueNeg >= 0.84) && (testTruePos >= 0.4 && testTrueNeg >= 0.5))
+    %if (testTruePos >= 0.70 && testTrueNeg >= 0.70)
 
         ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
         ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
@@ -149,5 +147,4 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, minVel, epsilon, pl
     end
 
     %% 
-
 end

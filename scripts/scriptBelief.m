@@ -26,8 +26,8 @@ function [trainTruePos, trainFalsePos, trainTrueNeg, trainFalseNeg, ....
     trainTrueNeg = classFtrain(2);
     trainFalseNeg = classFtrain(1);
 
-    %% Classify train data
-    samp_freq = 1/10; % for QMUL data
+    %% Classify test data
+%     samp_freq = 1/10; % for QMUL data
     [classEtest, outEtest] = fun_belief_norm(Etest, Sigma, samp_freq, minVel, epsi);
     [classFtest, outFtest] = fun_belief_norm(Ftest, Sigma, samp_freq, minVel, epsi);
 

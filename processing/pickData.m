@@ -106,7 +106,7 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
     Ftrain = [];
     Etest = [];
     Ftest = [];
-        
+%% For ALL data vs QMUL        
     m = length(E);
     idx = randperm(m);
 
@@ -127,7 +127,8 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
         Etrain = [Etrain, E1];
         Ftrain = [Ftrain, F1];
     end 
-    
+
+%% Picking manually
 %     % pick just what you need
 %     Vtrain = [a3;b4];
 %     
