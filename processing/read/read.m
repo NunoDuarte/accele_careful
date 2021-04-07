@@ -185,13 +185,15 @@ function [E, F] = read(name, object)
             E{4} = csvread(['data/' name '/' object '/empty/3_right.csv']);
             E{4}(1:230,:) = 0;                         
             %
-            F{1} = csvread(['data/' name '/red-cup' '/full/0_right.csv']);
-            F{1}(300:end,:) = 0;   
-            F{2} = csvread(['data/' name '/' object '/full/2_right.csv']);
-            F{2}(1:50,:) = 0;   
-            F{3} = csvread(['data/' name '/' object '/full/3_right.csv']);
-            F{3}(1:70,:) = 0;   
-            F{4} = csvread(['data/' name '/' object '/full/4_right.csv']);
+            F{1} = csvread(['data/' name '/' object '/full/0_right.csv']);
+            F{1}(300:end,:) = 0;
+            F{2} = csvread(['data/' name '/' object '/full/1_right.csv']);
+            F{2}(1:50,:) = 0;               
+            F{3} = csvread(['data/' name '/' object '/full/2_right.csv']);
+            F{3}(1:50,:) = 0;   
+            F{4} = csvread(['data/' name '/' object '/full/3_right.csv']);
+            F{4}(1:70,:) = 0;   
+            F{5} = csvread(['data/' name '/' object '/full/4_right.csv']);
 
         elseif strcmp(object, 'red-mug')
             E{1} = csvread(['data/' name '/' object '/empty/0_right.csv']);
