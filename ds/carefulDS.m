@@ -13,11 +13,11 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-% [E, F] = read('Athanasios', 'champagne');
-readQMUL;
+[E, F] = read('Leo', 'red-cup');
+%readQMUL;
 
 % plotting?
-plotting = 1;
+plotting = 0;
 
 %% Remove Non-Zeros - Empty
 
@@ -70,7 +70,7 @@ for i=1:length(E3)
 end
 samp_freq = 0.1; % for QMUL data
 %samp_freq = 1/50; % for EPFL data
-genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E', '2D');
+genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E');
 
 %% Remove Non Zeros
 
@@ -121,6 +121,6 @@ for i=1:length(F3)
         Full3Dnorm{i} = Norm2';
     end
 end
-genDS(Full3Dnorm, default, [], [], [], samp_freq, 'F', '2D');
+genDS(Full3Dnorm, default, [], [], [], samp_freq, 'F');
 
 
