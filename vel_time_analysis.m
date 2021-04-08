@@ -9,7 +9,8 @@ addpath(genpath('processing/'))
 addpath('data')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'red-cup');
+[E, ~] = read('Leo', 'plastic-cup');
+[~, F] = read('Leo', 'red-cup');
 
 % plotting?
 plotting = 0;
@@ -32,7 +33,7 @@ for i=1:length(E)
     TE{i} = E{i}(TimeVE,1);
     % normalize
     TE{i} = TE{i} - TE{i}(1);
-%     TE{i} = TE{i}/TE{i}(end);
+    TE{i} = TE{i}/TE{i}(end);
     
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
@@ -48,7 +49,7 @@ for i=1:length(E)
 end
 
 if plotting
-    figure;
+    figure();
     plot3(ploty, plotx, plotz, '.');
 end
 
@@ -85,14 +86,17 @@ for i=1:length(Emp3Dnorm)
         tmp(j,:) = smooth(Emp3Dnorm{i}(j,:),25); 
     end
     
-    tmp_d = diff(tmp,1,2)./repmat(diff(Emp3Dnorm{i}(2,:)),d,1);
-%     tmp_d = diff(tmp,1,2)/dt;    
+%   tmp_d = diff(tmp,1,2)./repmat(diff(Emp3Dnorm{i}(2,:)),d,1);
+    tmp_d = diff(tmp,1,2)/dt;
+    tmp_d = -1*tmp_d;     
+
     % saving demos next to each other
     Data = [Data [tmp;tmp_d zeros(d,1)]];
 end
 
     
-figure();
+figure(1);
+hold on
 plot(Data(2,:), Data(3,:), 'r.');
 
 
@@ -116,7 +120,7 @@ for i=1:length(F)
     TF{i} = F{i}(TimeVF,1);
     % normalize
     TF{i} = TF{i} - TF{i}(1);
-%     TF{i} = TF{i}/TF{i}(end);
+    TF{i} = TF{i}/TF{i}(end);
     
     F3{i} = round(F3{i},4);
     
@@ -165,12 +169,17 @@ for i=1:length(Full3Dnorm)
         tmp(j,:) = smooth(Full3Dnorm{i}(j,:),25); 
     end
     
-    tmp_d = diff(tmp,1,2)./repmat(diff(Full3Dnorm{i}(2,:)),d,1);
-%     tmp_d = diff(tmp,1,2)/dt;     
+%    tmp_d = diff(tmp,1,2)./repmat(diff(Full3Dnorm{i}(2,:)),d,1);
+     tmp_d = diff(tmp,1,2)/dt;     
+     tmp_d = -1*tmp_d;     
+
     % saving demos next to each other
     Data = [Data [tmp;tmp_d zeros(d,1)]];
 end
 
     
-figure();
+figure(1);
 plot(Data(2,:), Data(3,:), 'g.');
+ylim([0, 1.8]);
+xlabel('$t (s)$','interpreter','latex','fontsize',15);
+ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
