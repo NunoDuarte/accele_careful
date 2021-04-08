@@ -12,7 +12,7 @@ for i=1:length(indexE)
 end
 
 % Full Cups
-fu2 = strfind(fullpaths, 'fu2b1');
+fu2 = strfind(fullpaths, 'fi3fu2');
 indexF = find(~cellfun(@isempty,fu2));
 
 for i=1:length(indexF)

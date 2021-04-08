@@ -6,15 +6,15 @@ clear
 clc
 
 addpath('ds')
-addpath('processing')
+addpath(genpath('processing/'))
 addpath('data')
 addpath('belief')
-addpath('../../software/Khansari/SEDS/SEDS_lib')
-addpath('../../software/Khansari/SEDS/GMR_lib')
+addpath('../seds/SEDS_lib')
+addpath('../seds/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'red-cup');
-%readQMUL;
+%[E, F] = read('Leo', 'plastic-cup');
+readQMUL;
 
 % plotting?
 plotting = 0;
@@ -30,6 +30,7 @@ for i=1:length(E)
     En{i}(:,1) = nonzeros(E{i}(:,2));
     En{i}(:,2) = nonzeros(E{i}(:,3));
     En{i}(:,3) = nonzeros(E{i}(:,4));
+    
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
     E3{i}(3,:) = En{i}(:,3)';       
@@ -59,17 +60,17 @@ for i=1:length(E3)
         dis = xT - E3{i}(:,j);
         disN = norm(dis,2);
         Norm1 = [Norm1; disN];
-        
-        % normalized over distance
-        Norm2 = Norm1/max(Norm1);
-        
-        % flip data to have the acceleration phase at the end
-        Norm2 = flip(Norm2);
-        Emp3Dnorm{i} = Norm2';
+       
     end
+    % normalized over distance
+    Norm2 = Norm1/max(Norm1);
+    % flip data to have the acceleration phase at the end
+    Norm2 = flip(Norm2);
+    Emp3Dnorm{i} = [Norm2'];
 end
-samp_freq = 0.1; % for QMUL data
-%samp_freq = 1/50; % for EPFL data
+samp_freq = 1/30; % for QMUL data
+%samp_freq = 1/100; % for EPFL data
+
 genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E');
 
 %% Remove Non Zeros
