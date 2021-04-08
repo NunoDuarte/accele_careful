@@ -9,7 +9,7 @@ addpath(genpath('processing/'))
 addpath('data')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'plastic-cup');
+[E, F] = read('Leo', 'red-cup');
 
 % plotting?
 plotting = 0;
@@ -32,12 +32,7 @@ for i=1:length(E)
     TE{i} = E{i}(TimeVE,1);
     % normalize
     TE{i} = TE{i} - TE{i}(1);
-    TE{i} = TE{i}/TE{i}(end);
-    %% get the real sampling rate
-    %iwant_even = k(2:2:end) ;
-    mA = ones(length(TE{i}),1);
-    mA = mA(2:2:end)*-1;
-    TdiffE{1} = TE{i}(
+%     TE{i} = TE{i}/TE{i}(end);
     
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
@@ -75,12 +70,12 @@ for i=1:length(E3)
     Emp3Dnorm{i} = [Norm2';TE{i}(:,1)'];
 
 end
-%samp_freq = 1/30; % for QMUL data
-samp_freq = 1/120; % for EPFL data
+
 
 %% Velocidate/Tempo
 
-dt = 1/50;
+%samp_freq = 1/30; % for QMUL data
+dt = 1/120; % for EPFL data
 d = size(Emp3Dnorm{1},1); %dimensionality of demosntrations
 Data= [];
 for i=1:length(Emp3Dnorm)
@@ -121,7 +116,7 @@ for i=1:length(F)
     TF{i} = F{i}(TimeVF,1);
     % normalize
     TF{i} = TF{i} - TF{i}(1);
-    TF{i} = TF{i}/TF{i}(end);
+%     TF{i} = TF{i}/TF{i}(end);
     
     F3{i} = round(F3{i},4);
     
