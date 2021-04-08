@@ -26,23 +26,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
 
     [tmp , tmp, Data, index] = preprocess_demos(F, samp_freq, 0.0001); %preprocessing data
 
-    Datanew = [];
-    % Add this to extract just the acceleration phase
-    id = find(Data(1,:) == 0);
-    for i=1:length(id)
-        % extract the data until it reaches the maximum velocity
-        if i == 1
-            [maxVel, idVel] = max(Data(2,1:id(1)));
-            count = 0;
-        else
-            [maxVel, idVel] = max(Data(2,id(i-1):id(i)));
-            count = id(i-1)-1;
-        end
-
-        Datanew = [Datanew, Data(:,idVel+count:id(i))];
-    end
-    Data = Datanew;
-
+    % if you want to process QMUL data you are missing something
     %% 
     [Priors_0, Mu_0, Sigma_0] = initialize_SEDS(Data,K); %finding an initial guess for GMM's parameter
     [Priors Mu Sigma]=SEDS_Solver(Priors_0,Mu_0,Sigma_0,Data,options); %running SEDS optimization solver
