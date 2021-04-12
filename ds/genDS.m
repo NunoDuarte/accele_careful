@@ -34,14 +34,14 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
     %% Save to files
 
     if type == 'F'
-        save('PriorsF.mat', 'Priors')
-        save('MuF.mat', 'Mu')
-        save('SigmaF.mat', 'Sigma')
+        save('/param/PriorsF.mat', 'Priors')
+        save('/param/MuF.mat', 'Mu')
+        save('/param/SigmaF.mat', 'Sigma')
 
     elseif type == 'E'
-        save('PriorsE.mat', 'Priors')
-        save('MuE.mat', 'Mu')
-        save('SigmaE.mat', 'Sigma')
+        save('/param/PriorsE.mat', 'Priors')
+        save('/param/MuE.mat', 'Mu')
+        save('/param/SigmaE.mat', 'Sigma')
     end
 
     %% Draw GMRs for all dimensions (x/y, .x/x, .y/y)
