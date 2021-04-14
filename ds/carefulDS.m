@@ -9,12 +9,12 @@ addpath('ds')
 addpath(genpath('processing/'))
 addpath('data')
 addpath('belief')
-addpath('../seds/SEDS_lib')
-addpath('../seds/GMR_lib')
+addpath('../../software/Khansari/SEDS/SEDS_lib')
+addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-%[E, F] = read('Leo', 'plastic-cup');
-readQMUL;
+[E, F] = read('Leo', 'plastic-cup');
+%readQMUL;
 
 % plotting?
 plotting = 0;
@@ -68,8 +68,8 @@ for i=1:length(E3)
     Norm2 = flip(Norm2);
     Emp3Dnorm{i} = [Norm2'];
 end
-samp_freq = 1/30; % for QMUL data
-%samp_freq = 1/100; % for EPFL data
+%samp_freq = 1/30; % for QMUL data
+samp_freq = 1/120; % for EPFL data
 
 genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E');
 
