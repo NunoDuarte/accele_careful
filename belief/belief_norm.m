@@ -9,17 +9,18 @@ addpath('processing')
 addpath('data')
 addpath('ds')
 addpath('belief')
+addpath('param')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-%[E, F] = read('David', 'big-plastic-cup');
-readQMUL;
+[E, F] = read('Leo', 'plastic-cup');
+%readQMUL;
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{6}; 
+testX = E{5}; 
 
 % remove nonzeros
 testXn(:,1) = nonzeros(testX(:,2));
@@ -47,8 +48,9 @@ for i=1:length(test3)
         Emp3Dnorm{i} = Norm2';
     end
 end
-samp_freq = 1/10; % for QMUL data
-%samp_freq = 1/50; % for EPFL data
+%samp_freq = 1/30; % for QMUL data
+samp_freq = 1/120; % for EPFL data
+
 [~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
 
 % flip Data to start at (0,0);
@@ -115,7 +117,8 @@ b = [b1, b2];
 b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
-epsilon = 0.8; % adaptation rate
+epsilon = 0.2; % adaptation rate
+minVel = 0.2; %
 
 d = 1; %dimension of data
 xT = 0;
@@ -129,7 +132,7 @@ K = 0; % out many values to average
 for j = 1:length(Data)-K-1   
     ee = [0 0];
 
-    if abs(Data(2,j)) > 0
+    if abs(Data(2,j)) > minVel
         for i = 1:2
 
             outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));
