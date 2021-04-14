@@ -26,7 +26,23 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
 
     [tmp , tmp, Data, index] = preprocess_demos(F, samp_freq, 0.0001); %preprocessing data
 
-    % if you want to process QMUL data you are missing something
+    % THIS IS TO EXTRACT JUST THE ACCELERATION PHASE
+    Datanew = [];
+    id = find(Data(1,:) == 0);
+    for i=1:length(id)
+        % extract the data until it reaches the maximum velocity 
+        if i == 1
+            [~, idVel] = max(Data(2,1:id(1)));
+            count = 0;
+        else
+            [~, idVel] = max(Data(2,id(i-1):id(i)));
+            count = id(i-1)-1;
+        end
+
+        Datanew = [Datanew, Data(:,idVel+count:id(i))];
+    end
+    Data = Datanew;
+    
     %% 
     [Priors_0, Mu_0, Sigma_0] = initialize_SEDS(Data,K); %finding an initial guess for GMM's parameter
     [Priors Mu Sigma]=SEDS_Solver(Priors_0,Mu_0,Sigma_0,Data,options); %running SEDS optimization solver
@@ -34,14 +50,14 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
     %% Save to files
 
     if type == 'F'
-        save('/param/PriorsF.mat', 'Priors')
-        save('/param/MuF.mat', 'Mu')
-        save('/param/SigmaF.mat', 'Sigma')
+        save('param/PriorsF.mat', 'Priors')
+        save('param/MuF.mat', 'Mu')
+        save('param/SigmaF.mat', 'Sigma')
 
     elseif type == 'E'
-        save('/param/PriorsE.mat', 'Priors')
-        save('/param/MuE.mat', 'Mu')
-        save('/param/SigmaE.mat', 'Sigma')
+        save('param/PriorsE.mat', 'Priors')
+        save('param/MuE.mat', 'Mu')
+        save('param/SigmaE.mat', 'Sigma')
     end
 
     %% Draw GMRs for all dimensions (x/y, .x/x, .y/y)
