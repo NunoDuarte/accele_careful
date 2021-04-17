@@ -18,7 +18,7 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
     
     % QMUL dataset
     % #### 1
-    files = dir('/home/nuno/Documents/MATLAB/PhD/fullvsNOTfull/data/QMUL/1/*.csv');
+    files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/1/*.csv');
     fullpaths = fullfile({files.folder}, {files.name});
 
     % Empty Cups
@@ -39,7 +39,7 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
     end        
     
     % #### 2
-    files = dir('/home/nuno/Documents/MATLAB/PhD/fullvsNOTfull/data/QMUL/2/*.csv');
+    files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/2/*.csv');
     fullpaths = fullfile({files.folder}, {files.name});
 
     % Empty Cups
@@ -60,7 +60,7 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
     end
     
     % #### 4
-    files = dir('/home/nuno/Documents/MATLAB/PhD/fullvsNOTfull/data/QMUL/4/*.csv');
+    files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/4/*.csv');
     fullpaths = fullfile({files.folder}, {files.name});
 
     % Empty Cups
@@ -81,7 +81,7 @@ function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
     end
     
     % #### 5
-    files = dir('/home/nuno/Documents/MATLAB/PhD/fullvsNOTfull/data/QMUL/5/*.csv');
+    files = dir('/home/nuno/Documents/MATLAB/PhD/accele_careful/data/QMUL/5/*.csv');
     fullpaths = fullfile({files.folder}, {files.name});    
     
     % Empty Cups
