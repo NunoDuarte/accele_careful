@@ -13,11 +13,12 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'plastic-cup');
+% [E, F] = read('Leo', 'plastic-cup');
 %readQMUL;
+[E, F] = readIST('empty');
 
 % plotting?
-plotting = 0;
+plotting = 1;
 
 %% Remove Non-Zeros - Empty
 
@@ -27,9 +28,9 @@ end
 
 for i=1:length(E)
 
-    En{i}(:,1) = nonzeros(E{i}(:,2));
-    En{i}(:,2) = nonzeros(E{i}(:,3));
-    En{i}(:,3) = nonzeros(E{i}(:,4));
+    En{i}(:,1) = (E{i}(:,2));
+    En{i}(:,2) = (E{i}(:,3));
+    En{i}(:,3) = (E{i}(:,4));
     
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
@@ -48,6 +49,10 @@ if plotting
     figure;
     plot3(ploty, plotx, plotz, '.');
 end
+
+%%
+plotting = 1;    % do you want to plot the 3D versions?
+Emp3D = processData(E3, plotting);
 
 %% Generate a DS for Empty Cups
 % do you want the default parameters?
@@ -69,7 +74,7 @@ for i=1:length(E3)
     Emp3Dnorm{i} = [Norm2'];
 end
 %samp_freq = 1/30; % for QMUL data
-samp_freq = 1/120; % for EPFL data
+samp_freq = 1/120; % for EPFL/IST data
 
 genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E');
 
@@ -79,10 +84,13 @@ if plotting
     [plotx, ploty, plotz] = deal(0);
 end
 
+% out = A(all(~isnan(A),2),:);  % for nan - rows
+
 for i=1:length(F)
-    Fn{i}(:,1) = nonzeros(F{i}(:,2));
-    Fn{i}(:,2) = nonzeros(F{i}(:,3));
-    Fn{i}(:,3) = nonzeros(F{i}(:,4));
+    F{i} = F{i}(all(~isnan(F{i}),2),:);  % for nan - rows
+    Fn{i}(:,1) = (F{i}(:,2));
+    Fn{i}(:,2) = (F{i}(:,3));
+    Fn{i}(:,3) = (F{i}(:,4));
     F3{i}(1,:) = Fn{i}(:,1)';
     F3{i}(2,:) = Fn{i}(:,2)';
     F3{i}(3,:) = Fn{i}(:,3)'; 

@@ -5,34 +5,34 @@ function [E, F] = readIST(name)
         E = [];
         % 
         % Full
-        F{1} = load(['data/IST_new_segs/1/1-full_r.mat']).one1;
-        F{2} = load(['data/IST_new_segs/1/2-full_r.mat']).one1;
-        F{3} = load(['data/IST_new_segs/1/3-full_r.mat']).one1;
-        F{4} = load(['data/IST_new_segs/2/1-full_r.mat']).one1;
-        F{5} = load(['data/IST_new_segs/2/3-full_r.mat']).one1;
-        F{6} = load(['data/IST_new_segs/3/2-full_r.mat']).one1;
-        F{7} = load(['data/IST_new_segs/3/3-full_r.mat']).one1;
-        F{8} = load(['data/IST_new_segs/4/1-full_r.mat']).one1;
-        F{9} = load(['data/IST_new_segs/4/2-full_r.mat']).one1;
-        F{10} = load(['data/IST_new_segs/6/1-full_r.mat']).one1;
-        F{11} = load(['data/IST_new_segs/6/2-full_r.mat']).one1;
-        F{12} = load(['data/IST_new_segs/6/3-full_r.mat']).one1;
+        F{1} = load(['data/IST_new_segs/1/1-full_r.mat']).data;
+        F{2} = load(['data/IST_new_segs/1/2-full_r.mat']).data;
+        F{3} = load(['data/IST_new_segs/1/3-full_r.mat']).data;
+        F{4} = load(['data/IST_new_segs/2/1-full_r.mat']).data;
+        F{5} = load(['data/IST_new_segs/2/3-full_r.mat']).data;
+        F{6} = load(['data/IST_new_segs/3/2-full_r.mat']).data;
+        F{7} = load(['data/IST_new_segs/3/3-full_r.mat']).data;
+        F{8} = load(['data/IST_new_segs/4/1-full_r.mat']).data;
+        F{9} = load(['data/IST_new_segs/4/2-full_r.mat']).data;
+        F{10} = load(['data/IST_new_segs/6/1-full_r.mat']).data;
+        F{11} = load(['data/IST_new_segs/6/2-full_r.mat']).data;
+        F{12} = load(['data/IST_new_segs/6/3-full_r.mat']).data;
         
     % reading data of give-empty
     elseif strcmp(name,'empty')
         
-        E{1} = load(['data/IST_new_segs/1/1-empty_r.mat']).one1;
-        E{2} = load(['data/IST_new_segs/1/2-empty_r.mat']).one1;
-        E{3} = load(['data/IST_new_segs/1/3-empty_r.mat']).one1;
-        E{4} = load(['data/IST_new_segs/2/1-empty_r.mat']).one1;
-        E{5} = load(['data/IST_new_segs/2/2-empty_r.mat']).one1;
-        E{6} = load(['data/IST_new_segs/2/3-empty_r.mat']).one1;
-        E{7} = load(['data/IST_new_segs/3/1-empty_r.mat']).one1;
-        E{8} = load(['data/IST_new_segs/3/2-empty_r.mat']).one1;
-        E{9} = load(['data/IST_new_segs/3/3-empty_r.mat']).one1;
-        E{10} = load(['data/IST_new_segs/4/1-empty_r.mat']).one1;
-        E{11} = load(['data/IST_new_segs/4/2-empty_r.mat']).one1;
-        E{12} = load(['data/IST_new_segs/6/1-empty_r.mat']).one1;
+        E{1} = load(['data/IST_new_segs/1/1-empty_r.mat']).data;
+        E{2} = load(['data/IST_new_segs/1/2-empty_r.mat']).data;
+        E{3} = load(['data/IST_new_segs/1/3-empty_r.mat']).data;
+        E{4} = load(['data/IST_new_segs/2/1-empty_r.mat']).data;
+        E{5} = load(['data/IST_new_segs/2/2-empty_r.mat']).data;
+        E{6} = load(['data/IST_new_segs/2/3-empty_r.mat']).data;
+        E{7} = load(['data/IST_new_segs/3/1-empty_r.mat']).data;
+        E{8} = load(['data/IST_new_segs/3/2-empty_r.mat']).data;
+        E{9} = load(['data/IST_new_segs/3/3-empty_r.mat']).data;
+        E{10} = load(['data/IST_new_segs/4/1-empty_r.mat']).data;
+        E{11} = load(['data/IST_new_segs/4/2-empty_r.mat']).data;
+        E{12} = load(['data/IST_new_segs/6/1-empty_r.mat']).data;
         
         F = [];
         
