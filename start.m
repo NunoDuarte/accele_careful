@@ -30,9 +30,9 @@ epsi = [0.35, 0.4, 0.5, 0.55, 0.7, 0.8, 0.9, 1.0, 1.15, 1.2, 1.25, 1.3, 1.4, 1.5
 % do I have to add K parameter?
 K = [1];
 
-% what data is it? EPFL 1/120 ? QMUL 1/30 ?
+% what data is it? EPFL/IST 1/120 ? QMUL 1/30 ?
 freqs.train = 1/120; 
-freqs.test = 1/30;
+freqs.test = 1/120;
 
 plots = 0;
 for m = 1:length(minVel)
