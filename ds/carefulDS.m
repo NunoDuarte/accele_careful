@@ -15,7 +15,7 @@ addpath('../../software/Khansari/SEDS/GMR_lib')
 % Which Person to choose (Salman, Leo, Bernardo)
 % [E, F] = read('Leo', 'plastic-cup');
 %readQMUL;
-[E, F] = readIST('empty');
+[E, F] = readIST('half');
 
 % plotting?
 plotting = 1;
