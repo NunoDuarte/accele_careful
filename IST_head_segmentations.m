@@ -1,102 +1,137 @@
 % first 18 files don't matter ???
-data{1} = readmatrix(['data/pair-1/8.csv']);
-data{2} = readmatrix(['data/pair-1/9.csv']);
-data{3} = readmatrix(['data/pair-1/10.csv']);
-data{4} = readmatrix(['data/pair-1/11.csv']);
-data{5} = readmatrix(['data/pair-1/12.csv']);
-data{6} = readmatrix(['data/pair-1/13.csv']);
-data{7} = readmatrix(['data/pair-1/14.csv']);
-data{8} = readmatrix(['data/pair-1/15.csv']);
-data{9} = readmatrix(['data/pair-1/16.csv']);
-data{10} = readmatrix(['data/pair-1/17.csv']);
-data{11} = readmatrix(['data/pair-1/18.csv']);
-data{12} = readmatrix(['data/pair-1/19.csv']);
-data{13} = readmatrix(['data/pair-1/20.csv']);
-data{14} = readmatrix(['data/pair-1/21.csv']);
-data{15} = readmatrix(['data/pair-1/22.csv']);
-data{16} = readmatrix(['data/pair-1/23.csv']);
-data{17} = readmatrix(['data/pair-1/24.csv']);
-data{18} = readmatrix(['data/pair-1/25.csv']);
-data{19} = readmatrix(['data/pair-1/26.csv']);
-data{20} = readmatrix(['data/pair-1/27.csv']);
-data{21} = readmatrix(['data/pair-1/28.csv']);
-data{22} = readmatrix(['data/pair-1/29.csv']);
-data{23} = readmatrix(['data/pair-1/30.csv']);
-data{24} = readmatrix(['data/pair-1/31.csv']);
-data{25} = readmatrix(['data/pair-1/32.csv']);
-data{26} = readmatrix(['data/pair-1/33.csv']);
-data{27} = readmatrix(['data/pair-1/34.csv']);
-data{28} = readmatrix(['data/pair-1/35.csv']);
-data{29} = readmatrix(['data/pair-1/36.csv']);
-data{30} = readmatrix(['data/pair-1/37.csv']);
-data{31} = readmatrix(['data/pair-1/38.csv']);
-data{32} = readmatrix(['data/pair-1/39.csv']);
-data{33} = readmatrix(['data/pair-1/40.csv']);
-data{34} = readmatrix(['data/pair-1/41.csv']);
-data{35} = readmatrix(['data/pair-1/42.csv']);
-data{36} = readmatrix(['data/pair-1/43.csv']);
-data{37} = readmatrix(['data/pair-1/44.csv']);
-data{38} = readmatrix(['data/pair-1/45.csv']);
-data{39} = readmatrix(['data/pair-1/46.csv']);
-data{40} = readmatrix(['data/pair-1/47.csv']);
-data{41} = readmatrix(['data/pair-1/48.csv']);
-data{42} = readmatrix(['data/pair-1/49.csv']);
-data{43} = readmatrix(['data/pair-1/50.csv']);
-data{44} = readmatrix(['data/pair-1/51.csv']);
-data{45} = readmatrix(['data/pair-1/52.csv']);
-data{46} = readmatrix(['data/pair-1/53.csv']);
-data{47} = readmatrix(['data/pair-1/54.csv']);
-data{48} = readmatrix(['data/pair-1/55.csv']);
-data{49} = readmatrix(['data/pair-1/56.csv']);
-data{50} = readmatrix(['data/pair-1/57.csv']);
-data{51} = readmatrix(['data/pair-1/58.csv']);
-data{52} = readmatrix(['data/pair-1/59.csv']);
-data{53} = readmatrix(['data/pair-1/60.csv']);
-data{54} = readmatrix(['data/pair-1/61.csv']);
-data{55} = readmatrix(['data/pair-1/62.csv']);
-data{56} = readmatrix(['data/pair-1/63.csv']);
-data{57} = readmatrix(['data/pair-1/64.csv']);
-data{58} = readmatrix(['data/pair-1/65.csv']);
-data{59} = readmatrix(['data/pair-1/66.csv']);
-data{60} = readmatrix(['data/pair-1/67.csv']);
-data{61} = readmatrix(['data/pair-1/68.csv']);
-data{62} = readmatrix(['data/pair-1/69.csv']);
-data{63} = readmatrix(['data/pair-1/70.csv']);
-data{64} = readmatrix(['data/pair-1/71.csv']);
-data{65} = readmatrix(['data/pair-1/72.csv']);
-data{66} = readmatrix(['data/pair-1/73.csv']);
-data{67} = readmatrix(['data/pair-1/74.csv']);
-data{68} = readmatrix(['data/pair-1/75.csv']);
-data{69} = readmatrix(['data/pair-1/76.csv']);
-data{70} = readmatrix(['data/pair-1/77.csv']);
-data{71} = readmatrix(['data/pair-1/78.csv']);
-data{72} = readmatrix(['data/pair-1/79.csv']);
-data{73} = readmatrix(['data/pair-1/80.csv']);
-data{74} = readmatrix(['data/pair-1/81.csv']);
-data{75} = readmatrix(['data/pair-1/82.csv']);
-data{76} = readmatrix(['data/pair-1/83.csv']);
-data{77} = readmatrix(['data/pair-1/84.csv']);
-data{78} = readmatrix(['data/pair-1/85.csv']);
-data{79} = readmatrix(['data/pair-1/86.csv']);
-data{80} = readmatrix(['data/pair-1/87.csv']);
-data{81} = readmatrix(['data/pair-1/88.csv']);
-data{82} = readmatrix(['data/pair-1/89.csv']);
-% data{83} = readmatrix(['data/pair-1/90.csv']);
-% data{84} = readmatrix(['data/pair-1/91.csv']);
-% data{85} = readmatrix(['data/pair-1/92.csv']);
-% data{86} = readmatrix(['data/pair-1/93.csv']);
-% data{87} = readmatrix(['data/pair-1/94.csv']);
-% data{88} = readmatrix(['data/pair-1/95.csv']);
+data{1} = csvread(['data/pair-2/8.csv'],1,0);
+data{2} = csvread(['data/pair-2/9.csv'],1,0);
+data{3} = csvread(['data/pair-2/10.csv'],1,0);
+data{4} = csvread(['data/pair-2/11.csv'],1,0);
+data{5} = csvread(['data/pair-2/12.csv'],1,0);
+data{6} = csvread(['data/pair-2/13.csv'],1,0);
+data{7} = csvread(['data/pair-2/14.csv'],1,0);
+data{8} = csvread(['data/pair-2/15.csv'],1,0);
+data{9} = csvread(['data/pair-2/16.csv'],1,0);
+data{10} = csvread(['data/pair-2/17.csv'],1,0);
+data{11} = csvread(['data/pair-2/18.csv'],1,0);
+data{12} = csvread(['data/pair-2/19.csv'],1,0);
+data{13} = csvread(['data/pair-2/20.csv'],1,0);
+data{14} = csvread(['data/pair-2/21.csv'],1,0);
+data{15} = csvread(['data/pair-2/22.csv'],1,0);
+data{16} = csvread(['data/pair-2/23.csv'],1,0);
+data{17} = csvread(['data/pair-2/24.csv'],1,0);
+data{18} = csvread(['data/pair-2/25.csv'],1,0);
+data{19} = csvread(['data/pair-2/26.csv'],1,0);
+data{20} = csvread(['data/pair-2/27.csv'],1,0);
+data{21} = csvread(['data/pair-2/28.csv'],1,0);
+data{22} = csvread(['data/pair-2/29.csv'],1,0);
+data{23} = csvread(['data/pair-2/30.csv'],1,0);
+data{24} = csvread(['data/pair-2/31.csv'],1,0);
+data{25} = csvread(['data/pair-2/32.csv'],1,0);
+data{26} = csvread(['data/pair-2/33.csv'],1,0);
+data{27} = csvread(['data/pair-2/34.csv'],1,0);
+data{28} = csvread(['data/pair-2/35.csv'],1,0);
+data{29} = csvread(['data/pair-2/36.csv'],1,0);
+data{30} = csvread(['data/pair-2/37.csv'],1,0);
+data{31} = csvread(['data/pair-2/38.csv'],1,0);
+data{32} = csvread(['data/pair-2/39.csv'],1,0);
+data{33} = csvread(['data/pair-2/40.csv'],1,0);
+data{34} = csvread(['data/pair-2/41.csv'],1,0);
+data{35} = csvread(['data/pair-2/42.csv'],1,0);
+data{36} = csvread(['data/pair-2/43.csv'],1,0);
+data{37} = csvread(['data/pair-2/44.csv'],1,0);
+data{38} = csvread(['data/pair-2/45.csv'],1,0);
+data{39} = csvread(['data/pair-2/46.csv'],1,0);
+data{40} = csvread(['data/pair-2/47.csv'],1,0);
+data{41} = csvread(['data/pair-2/48.csv'],1,0);
+data{42} = csvread(['data/pair-2/49.csv'],1,0);
+data{43} = csvread(['data/pair-2/50.csv'],1,0);
+data{44} = csvread(['data/pair-2/51.csv'],1,0);
+data{45} = csvread(['data/pair-2/52.csv'],1,0);
+data{46} = csvread(['data/pair-2/53.csv'],1,0);
+data{47} = csvread(['data/pair-2/54.csv'],1,0);
+data{48} = csvread(['data/pair-2/55.csv'],1,0);
+data{49} = csvread(['data/pair-2/56.csv'],1,0);
+data{50} = csvread(['data/pair-2/57.csv'],1,0);
+data{51} = csvread(['data/pair-2/58.csv'],1,0);
+data{52} = csvread(['data/pair-2/59.csv'],1,0);
+data{53} = csvread(['data/pair-2/60.csv'],1,0);
+data{54} = csvread(['data/pair-2/61.csv'],1,0);
+data{55} = csvread(['data/pair-2/62.csv'],1,0);
+data{56} = csvread(['data/pair-2/63.csv'],1,0);
+data{57} = csvread(['data/pair-2/64.csv'],1,0);
+data{58} = csvread(['data/pair-2/65.csv'],1,0);
+data{59} = csvread(['data/pair-2/66.csv'],1,0);
+data{60} = csvread(['data/pair-2/67.csv'],1,0);
+data{61} = csvread(['data/pair-2/68.csv'],1,0);
+data{62} = csvread(['data/pair-2/69.csv'],1,0);
+data{63} = csvread(['data/pair-2/70.csv'],1,0);
+data{64} = csvread(['data/pair-2/71.csv'],1,0);
+data{65} = csvread(['data/pair-2/72.csv'],1,0);
+data{66} = csvread(['data/pair-2/73.csv'],1,0);
+data{67} = csvread(['data/pair-2/74.csv'],1,0);
+data{68} = csvread(['data/pair-2/75.csv'],1,0);
+data{69} = csvread(['data/pair-2/76.csv'],1,0);
+data{70} = csvread(['data/pair-2/77.csv'],1,0);
+data{71} = csvread(['data/pair-2/78.csv'],1,0);
+data{72} = csvread(['data/pair-2/79.csv'],1,0);
+data{73} = csvread(['data/pair-2/80.csv'],1,0);
+data{74} = csvread(['data/pair-2/81.csv'],1,0);
+data{75} = csvread(['data/pair-2/82.csv'],1,0);
+data{76} = csvread(['data/pair-2/83.csv'],1,0);
+data{77} = csvread(['data/pair-2/84.csv'],1,0);
+data{78} = csvread(['data/pair-2/85.csv'],1,0);
+data{79} = csvread(['data/pair-2/86.csv'],1,0);
+data{80} = csvread(['data/pair-2/87.csv'],1,0);
+data{81} = csvread(['data/pair-2/88.csv'],1,0);
+data{82} = csvread(['data/pair-2/89.csv'],1,0);
+% data{83} = csvread(['data/pair-2/90.csv'],1,0);
+% data{84} = csvread(['data/pair-2/91.csv'],1,0);
+% data{85} = csvread(['data/pair-2/92.csv'],1,0);
+% data{86} = csvread(['data/pair-2/93.csv'],1,0);
+% data{87} = csvread(['data/pair-2/94.csv'],1,0);
+% data{88} = csvread(['data/pair-2/95.csv'],1,0);
 
 
 %%
 
-Folder = 'data/IST/1/';
+clear Data
+
+Folder = 'data/IST/2/';
 DirList = dir(fullfile(Folder, '*.mat'));
 Data = cell(1, length(DirList));
 for k = 1:length(DirList)
   Data{k} = load(fullfile(Folder, DirList(k).name));
   Data{k} = Data{k}.data;
+end
+
+%% 
+[time] = deal([]);
+for i = 1:length(data)
+    
+    time = [time; data{i}(:,2)];
+    
+end
+
+%% 
+
+clear head;
+
+for i = 1:length(Data)
+    
+    val_found = ismembertol(time, Data{i}(:,1), 0.00001);
+    timestamps = find(val_found == 1);
+    
+    timestampsi = timestamps(1);
+    id = fix(timestampsi/1000);
+    
+    timestamps_norm = timestamps - id*1000;
+    if find(timestamps_norm > 1000)
+        index = find(timestamps_norm > 1000);
+        vec = [];
+        vec = [vec, data{id}(timestamps_norm(1:index(1)-1),2), data{id}(timestamps_norm(1:index(1)-1),3:9)];
+        vec = [vec; [data{id+1}(timestamps_norm(index(1):end)-1000,2), data{id+1}(timestamps_norm(index(1):end)-1000,3:9)]];
+    else
+        vec = [];
+        vec = [vec,[data{id}(timestamps_norm,2), data{id}(timestamps_norm,3:9)]]; 
+    end
+    head{i} = vec;
 end
 
 
