@@ -1,7 +1,3 @@
-
-E{1} = readmatrix(['data/IST/give-empty/1_right-1.csv']);
-
-
 % first 18 files don't matter ???
 data{1} = readmatrix(['data/pair-1/8.csv']);
 data{2} = readmatrix(['data/pair-1/9.csv']);
@@ -103,23 +99,39 @@ if plotting
     [plotx, ploty, plotz] = deal([]);
 end
 
-
 for i=1:length(data)
 
-%     En{i}(:,1) = (data{i}(:,79));
-%     En{i}(:,2) = (data{i}(:,80));
-%     En{i}(:,3) = (data{i}(:,81));
+%     En{i}(:,1) = (data{i}(:,55));
+%     En{i}(:,2) = (data{i}(:,56));
+%     En{i}(:,3) = (data{i}(:,57));
 %     En{i}(:,4) = (data{i}(:,2));
-    
-    En{i}(:,1) = (data{i}(:,55));
-    En{i}(:,2) = (data{i}(:,56));
-    En{i}(:,3) = (data{i}(:,57));
+    En{i}(:,1) = (data{i}(:,79));
+    En{i}(:,2) = (data{i}(:,80));
+    En{i}(:,3) = (data{i}(:,81));
     En{i}(:,4) = (data{i}(:,2));
-    
+
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,3)';
     E3{i}(3,:) = -En{i}(:,2)';
     E3{i}(4,:) = En{i}(:,4)';
+    E3{i} = round(E3{i},4);
+    
+    if plotting
+        plotx = [plotx, E3{i}(1,:)];
+        ploty = [ploty, E3{i}(2,:)];
+        plotz = [plotz, E3{i}(3,:)];             
+    end
+    
+%     En{i}(:,1) = (data{i}(:,7));
+%     En{i}(:,2) = (data{i}(:,8));
+%     En{i}(:,3) = (data{i}(:,9));
+    En{i}(:,1) = (data{i}(:,31));
+    En{i}(:,2) = (data{i}(:,32));
+    En{i}(:,3) = (data{i}(:,33));
+
+    E3{i}(1,:) = En{i}(:,1)';
+    E3{i}(2,:) = En{i}(:,3)';
+    E3{i}(3,:) = -En{i}(:,2)';
     E3{i} = round(E3{i},4);
     
     if plotting
