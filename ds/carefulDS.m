@@ -15,7 +15,8 @@ addpath('../../software/Khansari/SEDS/GMR_lib')
 % Which Person to choose (Salman, Leo, Bernardo)
 % [E, F] = read('Leo', 'plastic-cup');
 %readQMUL;
-[E, F] = readIST('half');
+[E, ~] = readIST('empty');
+[~, F] = readIST('full');
 
 % plotting?
 plotting = 1;
@@ -27,7 +28,7 @@ if plotting
 end
 
 for i=1:length(E)
-
+    E{i} = E{i}(all(~isnan(E{i}),2),:);  % for nan - rows
     En{i}(:,1) = (E{i}(:,2));
     En{i}(:,2) = (E{i}(:,3));
     En{i}(:,3) = (E{i}(:,4));
@@ -71,6 +72,14 @@ for i=1:length(E3)
     Norm2 = Norm1/max(Norm1);
     % flip data to have the acceleration phase at the end
     Norm2 = flip(Norm2);
+    % find 1 value
+    id = find(Norm2(:,1) == 1);
+    % if 1 is not in last place, add other 1s on the right
+    if id ~= length(Norm2)
+        for n=id:length(Norm2)
+            Norm2(n) = 1;
+        end
+    end
     Emp3Dnorm{i} = [Norm2'];
 end
 %samp_freq = 1/30; % for QMUL data
@@ -127,6 +136,14 @@ for i=1:length(F3)
         
         % flip data to have the acceleration phase at the end
         Norm2 = flip(Norm2);
+        % find 1 value
+        id = find(Norm2(:,1) == 1);
+        % if 1 is not in last place, add other 1s on the right
+        if id ~= length(Norm2)
+            for n=id:length(Norm2)
+                Norm2(n) = 1;
+            end
+        end
         Full3Dnorm{i} = Norm2';
     end
 end
