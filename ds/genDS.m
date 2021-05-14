@@ -28,6 +28,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
 
     % THIS IS TO EXTRACT JUST THE ACCELERATION PHASE
     Datanew = [];
+    Data(abs(Data)<10e-10)=0;  %% round really small numbers
     id = find(Data(1,:) == 0);
     for i=1:length(id)
         % extract the data until it reaches the maximum velocity 
