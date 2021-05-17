@@ -10,6 +10,11 @@ for k = 1:length(DirList)
   Data{k} = Data{k}.head;
 end
 
+%% read empty|head|full head movements
+
+load IST_head/empty/head_empty.mat
+head = headnew;
+
 %% get matrix of head movements
 DataEul = [];
 
@@ -28,9 +33,35 @@ for k = 1:length(Data)
     end
 end
 
+%% normalize to 100
+
+DataEulNorm = deal([]);
+
+for k = 1:length(DataEul)
+    for j = 1:length(DataEul{k})
+        DataEulNorm{k}{j} = resample(DataEul{k}{j}(:,:),100,length(DataEul{k}{j}(:,:)));   
+    end
+end
+
 %% calculate the average and std of head movement over time
 
+[avgX, avgY, avgZ] = deal([]);
+[stdX, stdY, stdZ] = deal([]);
 
+[sumX, sumY, sumZ] = deal(zeros(100,1));
+count = 0;
+for k = 1:length(DataEulNorm)
+    for j = 1:length(DataEulNorm{k})
+        sumX = sumX + abs(DataEulNorm{k}{j}(:,1));
+        sumY = sumY + abs(DataEulNorm{k}{j}(:,2));
+        sumZ = sumZ + abs(DataEulNorm{k}{j}(:,3));
+        count = count + 1;
+    end
+end
+
+avgX = sumX./count;
+avgY = sumY./count;
+avgZ = sumZ./count;
 
 %% plot all sequences
 
