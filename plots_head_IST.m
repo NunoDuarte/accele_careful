@@ -15,15 +15,45 @@ DataEul = [];
 
 for k = 1:length(Data)
     for j = 1:length(Data{k})
-        DataEul{k}{j}(:,1) = -Data{k}{j}(:,4); % z
-        DataEul{k}{j}(:,2) = Data{k}{j}(:,2);   % x
-        DataEul{k}{j}(:,3) = Data{k}{j}(:,3);   % y
-        DataEul{k}{j}(:,4) = Data{k}{j}(:,5);         % w
-        
+%         DataEul{k}{j}(:,1) = -Data{k}{j}(:,4);  % z
+%         DataEul{k}{j}(:,2) = Data{k}{j}(:,2);   % x
+%         DataEul{k}{j}(:,3) = Data{k}{j}(:,3);   % y
+%         DataEul{k}{j}(:,4) = Data{k}{j}(:,5);   % w
+        DataEul{k}{j}(:,:) = quatrotate(Data{k}{j}(:,2:5),Data{k}{j}(:,6:8));
 %         eul0 = quat2eul(DataEul{k}{j}(1,1:4));
-        eul = quat2eul(DataEul{k}{j}(:,1:4));
-        DataEul{k}{j} = rad2deg(eul);        
+%         eul = quat2eul(DataEul{k}{j}(:,1:4));
+        % center in origin
+        origin = DataEul{k}{j}(:,:) - DataEul{k}{j}(1,:);
+        DataEul{k}{j} = rad2deg(origin);        
     end
 end
 
-%% 
+%% calculate the average and std of head movement over time
+
+
+
+%% plot all sequences
+
+[plotx, ploty, plotz] = deal([]);
+
+figure();
+
+hold on;
+for k = 1:length(DataEul)
+    for j = 1:length(DataEul{k})
+        plotx = DataEul{k}{j}(:,1);
+        ploty = DataEul{k}{j}(:,2);
+        plotz = DataEul{k}{j}(:,3);
+        plot(plotx, '.r');
+        plot(ploty, '.g');
+        plot(plotz, '.b');
+        
+    end
+    
+end
+
+
+
+
+
+
