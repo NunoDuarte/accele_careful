@@ -10,11 +10,6 @@ for k = 1:length(DirList)
   Data{k} = Data{k}.head;
 end
 
-%% read empty|head|full head movements
-
-load IST_head/empty/head_empty.mat
-head = headnew;
-
 %% get matrix of head movements
 DataEul = [];
 
@@ -82,6 +77,98 @@ for k = 1:length(DataEul)
     end
     
 end
+
+%% read empty|head|full head movements
+
+load IST_head/empty/head_empty.mat
+head = headnew;
+
+%% get matrix of head movements
+DataEul = [];
+
+for k = 1:length(head)
+    DataEul{k}(:,:) = quatrotate(head{k}(:,2:5),head{k}(:,6:8));
+    % center in origin
+     origin = DataEul{k}(:,:) - DataEul{k}(1,:);
+     DataEul{k} = rad2deg(origin);     
+%     DataEul{k} = rad2deg(DataEul{k}(:,:));        
+
+end
+
+%% normalize to 100
+
+DataEulNorm = deal([]);
+
+for k = 1:length(DataEul)
+    DataEulNorm{k} = resample(DataEul{k}(:,:),100,length(DataEul{k}(:,:)));   
+end
+
+%% calculate the average and std of head movement over time
+
+[avgX, avgY, avgZ] = deal([]);
+[stdXX, stdYY, stdZZ] = deal([]);
+[stdX, stdY, stdZ] = deal([]);
+
+[sumX, sumY, sumZ] = deal(zeros(100,1));
+count = 0;
+for k = 1:length(DataEulNorm)
+    sumX = sumX + abs(DataEulNorm{k}(:,1));
+    sumY = sumY + abs(DataEulNorm{k}(:,2));
+    sumZ = sumZ + abs(DataEulNorm{k}(:,3));
+    stdX = [stdX, DataEulNorm{k}(:,1)];
+    stdY = [stdY, DataEulNorm{k}(:,2)];
+    stdZ = [stdZ, DataEulNorm{k}(:,3)];
+        
+    count = count + 1;
+end
+
+avgX = sumX'./count;
+avgY = sumY'./count;
+avgZ = sumZ'./count;
+stdXX = std(stdX');
+stdYY = std(stdY');
+stdZZ = std(stdZ');
+
+
+%% plot all sequences
+
+[plotx, ploty, plotz] = deal([]);
+
+figure();
+
+hold on;
+% plot(avgX, '.r');
+% plot(avgY, '.g');
+% plot(avgZ, '.b');
+
+x = 1:numel(avgX);
+
+curve1 = avgX + stdXX;
+curve2 = avgX - stdXX;
+x2 = [x, fliplr(x)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(x, avgX, 'r', 'LineWidth', 2);
+
+curve1 = avgY + stdYY;
+curve2 = avgY - stdYY;
+x2 = [x, fliplr(x)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(x, avgY, 'r', 'LineWidth', 2);
+
+curve1 = avgZ + stdZZ;
+curve2 = avgZ - stdZZ;
+x2 = [x, fliplr(x)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(x, avgZ, 'r', 'LineWidth', 2);
+
+%%
+
 
 
 
