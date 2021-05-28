@@ -13,13 +13,14 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-% [E, F] = read('Leo', 'plastic-cup');
-%readQMUL;
-[E, ~] = readIST('empty');
-[~, F] = readIST('full');
+[E, F] = read('Leo', 'plastic-cup');
+
+% readQMUL;
+% [E, ~] = readIST('empty');
+% [~, F] = readIST('full');
 
 % plotting?
-plotting = 1;
+plotting = 0;
 
 %% Remove Non-Zeros - Empty
 
@@ -28,10 +29,10 @@ if plotting
 end
 
 for i=1:length(E)
-    E{i} = E{i}(all(~isnan(E{i}),2),:);  % for nan - rows
-    En{i}(:,1) = (E{i}(:,2));
-    En{i}(:,2) = (E{i}(:,3));
-    En{i}(:,3) = (E{i}(:,4));
+    %E{i} = E{i}(all(~isnan(E{i}),2),:);  % for nan - rows
+    En{i}(:,1) = nonzeros(E{i}(:,2));
+    En{i}(:,2) = nonzeros(E{i}(:,3));
+    En{i}(:,3) = nonzeros(E{i}(:,4));
     
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
@@ -96,10 +97,13 @@ end
 % out = A(all(~isnan(A),2),:);  % for nan - rows
 
 for i=1:length(F)
-    F{i} = F{i}(all(~isnan(F{i}),2),:);  % for nan - rows
-    Fn{i}(:,1) = (F{i}(:,2));
-    Fn{i}(:,2) = (F{i}(:,3));
-    Fn{i}(:,3) = (F{i}(:,4));
+    %F{i} = F{i}(all(~isnan(F{i}),2),:);  % for nan - rows
+    Fn{i}(:,1) = nonzeros(F{i}(:,2));
+    Fn{i}(:,2) = nonzeros(F{i}(:,3));
+    Fn{i}(:,3) = nonzeros(F{i}(:,4));
+%     Fn{i}(:,1) = (F{i}(:,2));
+%     Fn{i}(:,2) = (F{i}(:,3));
+%     Fn{i}(:,3) = (F{i}(:,4));
     F3{i}(1,:) = Fn{i}(:,1)';
     F3{i}(2,:) = Fn{i}(:,2)';
     F3{i}(3,:) = Fn{i}(:,3)'; 

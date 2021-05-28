@@ -86,6 +86,8 @@ head = headnew;
 %% get matrix of head movements
 DataEul = [];
 
+quaternion
+
 for k = 1:length(head)
 %     DataEul{k}(:,:) = quatrotate(head{k}(:,2:5),head{k}(:,6:8));
     DataEul{k}(:,:) = rotateframe(head{k}(:,2:5),head{k}(:,6:8));
