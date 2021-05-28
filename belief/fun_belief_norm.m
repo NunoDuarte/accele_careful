@@ -1,16 +1,13 @@
 function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, minVel, epsi)
-    %% Belief System for 2 DS
-    
+
+    %% Belief System for 2 DS    
     for k = 1:length(Data)
-        % pick one trajectory
-%         %%%%% ADDED THIS
-%         Data{k} = Data{k}(all(~isnan(Data{k}),2),:);  % for nan - rows
+        % for each trajectory
         testX = Data{k};
 
-        % remove nonzeros
-        testXn(:,1) = nonzeros(testX(:,2));
-        testXn(:,2) = nonzeros(testX(:,3));
-        testXn(:,3) = nonzeros(testX(:,4));
+        % preprocess data
+        testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
+        testXn = testXn(all(~isnan(testXn),2),:);  % remove rows of NANs    
         test3{1}(1,:) = testXn(:,1)';
         test3{1}(2,:) = testXn(:,2)';
         test3{1}(3,:) = testXn(:,3)'; 
@@ -34,27 +31,9 @@ function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, 
 
         [~ , ~, dataProcess, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
 
-        % flip Data to start at (0,0);
+        % flip again to start at (0,0);
         dataProcess = flip(dataProcess')';
-%         %% Center the Data in the Origin
-% 
-%         testXn = test3{1};
-%         testXn = testXn - testXn(:,end);
-%         testXn = round(testXn,4);
-% 
-%         %% do the norm of all dimensions
-% 
-%         for n = 1:length(testXn)   
-%             testXnnorm(n) = norm(testXn(:,n));    
-%         end
-%         testXnnorm = round(testXnnorm,3);
-% 
-%         %% Real Velocity of testX
-% 
-%         dt = 0.02; % frequency 
-%         for i=2:length(testXn(1,:))
-%             testX_d(1,i-1) = (testXnnorm(1,i) - testXnnorm(1,i-1))/dt;
-%         end
+        
         %% Load Eigen Vectors
 
         % pick 1st gaussian
@@ -71,12 +50,9 @@ function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, 
 
         e2{1} = Ve(:,2);
         e2{2} = Vf(:,2);
-        %% Run each DS to get the desired velocity?
-        opt_sim.dt = 0.02;
-        opt_sim.i_max = 1;
-        opt_sim.tol = 0.001;
-        opt_sim.plot = 0;
+        %% Classifier Loop for Eigen matching
 
+        % initialization
         b1 = 0.5;
         b2 = 0.5;
         b = [b1, b2];

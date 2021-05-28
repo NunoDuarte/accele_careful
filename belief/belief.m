@@ -10,7 +10,9 @@ clc
 % pick one trajectory
 testX = E{1};
 
-% remove nonzeros
+% preprocess data
+testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
+testXn = testXn(all(~isnan(testXn),2),:);  % remove rows of NANs   
 testXn(:,1) = nonzeros(testX(:,2));
 testXn(:,2) = nonzeros(testX(:,3));
 testXn(:,3) = nonzeros(testX(:,4));
