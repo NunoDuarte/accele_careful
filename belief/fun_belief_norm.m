@@ -3,14 +3,14 @@ function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, 
     
     for k = 1:length(Data)
         % pick one trajectory
-        %%%%% ADDED THIS
-        Data{k} = Data{k}(all(~isnan(Data{k}),2),:);  % for nan - rows
+%         %%%%% ADDED THIS
+%         Data{k} = Data{k}(all(~isnan(Data{k}),2),:);  % for nan - rows
         testX = Data{k};
 
         % remove nonzeros
-        testXn(:,1) = (testX(:,2));
-        testXn(:,2) = (testX(:,3));
-        testXn(:,3) = (testX(:,4));
+        testXn(:,1) = nonzeros(testX(:,2));
+        testXn(:,2) = nonzeros(testX(:,3));
+        testXn(:,3) = nonzeros(testX(:,4));
         test3{1}(1,:) = testXn(:,1)';
         test3{1}(2,:) = testXn(:,2)';
         test3{1}(3,:) = testXn(:,3)'; 

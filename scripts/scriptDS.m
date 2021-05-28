@@ -20,7 +20,6 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
     % figure()
     % plot3(ploty, plotx, plotz, '.');
 
-
     %%
     plotting = 0;    % do you want to plot the 3D versions?
     [Emp3D, Emp2Do, Emp2D] = processData(E3, plotting);
@@ -130,8 +129,8 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
         scriptBelief(Etrain, Ftrain, Etest, Ftest, freq, minVel, epsilon);
     
     % Add if statement to filter results
-    %if ((trainTruePos >= 0.5 && trainTrueNeg >= 0.7) && (testTruePos >= 0.5 && testTrueNeg >= 0.7))
-    if (testTruePos >= 0.50 && testTrueNeg >= 0.70)
+    if ((trainTruePos >= 0.5 && trainTrueNeg >= 0.7) && (testTruePos >= 0.5 || testTrueNeg >= 0.7))
+    %if (testTruePos >= 0.50 && testTrueNeg >= 0.70)
 
         ConfTrain = {'Confusion Matrix', 'Train'; trainTruePos, trainFalsePos; trainFalseNeg, trainTrueNeg};
         ConfTest = {'Confusion Matrix', 'Test'; testTruePos, testFalsePos; testFalseNeg, testTrueNeg};
