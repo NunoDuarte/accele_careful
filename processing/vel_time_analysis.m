@@ -99,6 +99,12 @@ figure(1);
 hold on
 plot(Data(2,:), Data(3,:), 'r.');
 
+%% Velocidate/Distance
+   
+figure(2);
+hold on
+plot(Data(1,:), Data(3,:), 'r.');
+
 
 %% Remove Non Zeros
 
@@ -180,6 +186,14 @@ end
     
 figure(1);
 plot(Data(2,:), Data(3,:), 'g.');
+ylim([0, 1.8]);
+xlabel('$t (s)$','interpreter','latex','fontsize',15);
+ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
+
+%% Velocidate/Distance
+
+figure(2);
+plot(Data(1,:), Data(3,:), 'g.');
 ylim([0, 1.8]);
 xlabel('$t (s)$','interpreter','latex','fontsize',15);
 ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
