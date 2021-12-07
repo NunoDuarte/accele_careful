@@ -108,8 +108,24 @@ function [Classification, trainClass] = fun_belief_norm(Data, Sigma, samp_freq, 
         clear testXn
         clear test3
         
+        % calculate the response time
+        [row, col] = find(B == 1);
+        if row ~= 0
+            h1 = row(1); % pick first one
+        else
+            h1 = length(B);  % pick last one
+        end
+        h2 = h1/length(B); % get percentage of response time
+        response(:,k) = h2;
+        
+        % calculate time of handovers
+        time(:,k) = length(B)*(1/120)
+        
     end
 
+    resp_avg = mean(response);  % average of response time
+    time_avg = mean(time);      % average of handover time
+    
     clc
     sumtrainClass = sum(trainClass,2);
     Classification = [sumtrainClass(1)/length(Data); sumtrainClass(2)/length(Data)];
