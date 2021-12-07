@@ -186,7 +186,7 @@ end
     
 figure(1);
 plot(Data(2,:), Data(3,:), 'g.');
-ylim([0, 1.8]);
+ylim([0, 2]);
 xlabel('$t (s)$','interpreter','latex','fontsize',15);
 ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
 
@@ -194,6 +194,6 @@ ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
 
 figure(2);
 plot(Data(1,:), Data(3,:), 'g.');
-ylim([0, 1.8]);
-xlabel('$t (s)$','interpreter','latex','fontsize',15);
+ylim([0, 2]);
+xlabel('$x (m)$','interpreter','latex','fontsize',15);
 ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
