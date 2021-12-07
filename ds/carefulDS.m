@@ -13,7 +13,7 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'plastic-cup');
+[E, F] = read('All', 'plastic-cup');
 
 % % readQMUL;
 % [E, ~] = readIST('empty');
