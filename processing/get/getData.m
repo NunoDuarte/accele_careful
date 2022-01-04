@@ -19,18 +19,20 @@ function [train, test] = getData(P)
 %     a = {'All', 'plastic-cup'};
 %     b = {'Kunpeng', 'plastic-cup'};
     
-    V = [a1;a2;a3;b1;b2;b3;b4;c1;c2;d1;d2;e1];
+    V = [a1;a2;a3;b1;b2;b3;b4;c1;c2;d1;d2];
     m = length(V);
     
     idx = randperm(m);
     
     %training set
+    train = {};
     k = idx(1:round(P*m));
     for n = 1:length(k)
         train{n} = {V{k(n)}, V{k(n),2}};
     end
     
     % testing set
+    test = {};
     k = idx(round(P*m)+1:end);
     for n = 1:length(k)
         test{n} = {V{k(n)}, V{k(n),2}};
