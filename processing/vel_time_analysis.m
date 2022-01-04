@@ -92,6 +92,7 @@ for i=1:length(Emp3Dnorm)
 
     % saving demos next to each other
     Data = [Data [tmp;tmp_d zeros(d,1)]];
+    % Data(4,:) is the derivative of time (which means nothing)
 end
 
     
@@ -181,9 +182,10 @@ for i=1:length(Full3Dnorm)
 
     % saving demos next to each other
     Data = [Data [tmp;tmp_d zeros(d,1)]];
+    % Data(4,:) is the derivative of time (which means nothing)
 end
 
-    
+
 figure(1);
 plot(Data(2,:), Data(3,:), 'g.');
 ylim([0, 2]);
