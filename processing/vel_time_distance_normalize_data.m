@@ -309,8 +309,58 @@ max_acc = [max_acc_E, max_acc_F];
 p = anova1(max_acc, group)
 
 
+%% get peak vel/distance - inverse of time
+
+n = length(invT_E)/2
+
+invT_E = Data_vel_E./Data_pos_E;
+invT_F = Data_vel_F./Data_pos_F;
+
+max_acc_E = max(invT_E(:,1:n)');
+max_acc_F = max(invT_F(:,1:n)');
+
+avg_max_acc_E = mean(max_acc_E)
+std_max_acc_E = std(max_acc_E)
+avg_max_acc_F = mean(max_acc_F)
+std_max_acc_F = std(max_acc_F)
+
+% Get avg and std of velocities
+figure()
+avg_vE = mean(invT_E(:,1:n));
+avg_vF = mean(invT_F(:,1:n));
+
+std_vE = std(invT_E(:,1:n));
+std_vF = std(invT_F(:,1:n));
+
+curve1 = avg_vE + std_vE;
+curve2 = avg_vE - std_vE;
+xE = mean(Data_pos_E(:,1:n))
+
+x2 = [xE, fliplr(xE)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(xE, avg_vE, 'r', 'LineWidth', 2);
+
+figure();
+hold on;
+
+curve1 = avg_vF + std_vF;
+curve2 = avg_vF - std_vF;
+xF = mean(Data_pos_F(:,1:n))
+
+x2 = [xF, fliplr(xF)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(xF, avg_vF, 'r', 'LineWidth', 2);
 
 
+% because we have two vectors of different lengths
+group = repelem(1:2, 1, [numel(max_acc_E'),numel(max_acc_F')]);
 
+max_acc = [max_acc_E, max_acc_F];
+
+p = anova1(max_acc, group)
 
 
