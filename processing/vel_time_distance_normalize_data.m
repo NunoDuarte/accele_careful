@@ -12,6 +12,8 @@ addpath('data')
 [E, ~] = read('Leo', 'plastic-cup');
 [~, F] = read('Leo', 'red-cup');
 
+[E, F, ~, ~, ~, ~] = scriptAllData(1);
+
 % plotting?
 plotting = 0;
 
@@ -79,6 +81,9 @@ end
 dt = 1/120; % for EPFL data
 d = size(Emp3Dnorm{1},1); %dimensionality of demosntrations
 Data= [];
+Data_pos_E = [];
+Data_vel_E = [];
+Data_acc_E = [];
 for i=1:length(Emp3Dnorm)
     clear tmp tmp_d
     % de-noising data (not necessary)
@@ -89,15 +94,21 @@ for i=1:length(Emp3Dnorm)
 %   tmp_d = diff(tmp,1,2)./repmat(diff(Emp3Dnorm{i}(2,:)),d,1);
     tmp_d = diff(tmp,1,2)/dt;
     tmp_d = -1*tmp_d;     
+    tmp_dd = diff(tmp_d,1,2)/dt;
 
-    oL = length(tmp_d) + 1;
-    ds_tmp_d = interp1(1:oL, [tmp_d(1,:), 0], linspace(1,oL,100));
+    oL = length(tmp_d);
+    ds_tmp_d = interp1(1:oL, [tmp_d(1,:)], linspace(1,oL,100));
     oL = length(tmp);
     ds_tmp(1,:) = interp1(1:oL, tmp(1,:), linspace(1,oL,100));
     ds_tmp(2,:) = interp1(1:oL, tmp(2,:), linspace(1,oL,100));
+    oL = length(tmp_dd);
+    ds_tmp_dd = interp1(1:oL, [tmp_dd(1,:)], linspace(1,oL,100));
     
     % saving demos next to each other
     Data = [Data [ds_tmp;ds_tmp_d]];
+    Data_pos_E = [Data_pos_E; ds_tmp(1,:)];
+    Data_vel_E = [Data_vel_E; ds_tmp_d];
+    Data_acc_E = [Data_acc_E; ds_tmp_dd];
     % Data(4,:) is the derivative of time (which means nothing)
 end
 
@@ -175,6 +186,9 @@ end
 
 d = size(Full3Dnorm{1},1); %dimensionality of demosntrations
 Data= [];
+Data_pos_F = [];
+Data_vel_F = [];
+Data_acc_F = [];
 for i=1:length(Full3Dnorm)
     clear tmp tmp_d
     % de-noising data (not necessary)
@@ -184,16 +198,23 @@ for i=1:length(Full3Dnorm)
     
 %    tmp_d = diff(tmp,1,2)./repmat(diff(Full3Dnorm{i}(2,:)),d,1);
      tmp_d = diff(tmp,1,2)/dt;     
-     tmp_d = -1*tmp_d;     
+     tmp_d = -1*tmp_d; 
+     tmp_dd = diff(tmp_d,1,2)/dt;
 
-    oL = length(tmp_d) + 1;
-    ds_tmp_d = interp1(1:oL, [tmp_d(1,:), 0], linspace(1,oL,100));
+    oL = length(tmp_d);
+    ds_tmp_d = interp1(1:oL, [tmp_d(1,:)], linspace(1,oL,100));
     oL = length(tmp);
     ds_tmp(1,:) = interp1(1:oL, tmp(1,:), linspace(1,oL,100));
     ds_tmp(2,:) = interp1(1:oL, tmp(2,:), linspace(1,oL,100));
+    oL = length(tmp_dd);
+    ds_tmp_dd = interp1(1:oL, [tmp_dd(1,:)], linspace(1,oL,100));
 
     % saving demos next to each other
     Data = [Data [ds_tmp;ds_tmp_d]];
+    Data_pos_F = [Data_pos_F; ds_tmp(1,:)];
+    Data_vel_F = [Data_vel_F; ds_tmp_d];
+    Data_acc_F = [Data_acc_F; ds_tmp_dd];
+      
     % Data(4,:) is the derivative of time (which means nothing)
 end
 
@@ -215,4 +236,81 @@ ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
 % %% convert to csv
 % FileData = load('vel-t-m-data-sepaE.mat');
 % csvwrite('vel-t-m-data-sepaE.csv', FileData.Data_separated);
-% 
+
+%% Get avg and std of velocities
+
+figure();
+avg_vE = mean(Data_vel_E);
+avg_vF = mean(Data_vel_F);
+
+std_vE = std(Data_vel_E);
+std_vF = std(Data_vel_E);
+
+curve1 = avg_vE + std_vE;
+curve2 = avg_vE - std_vE;
+xE = mean(Data_pos_E)
+
+x2 = [xE, fliplr(xE)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(xE, avg_vE, 'r', 'LineWidth', 2);
+
+figure();
+hold on;
+
+curve1 = avg_vF + std_vF;
+curve2 = avg_vF - std_vF;
+xF = mean(Data_pos_F)
+
+x2 = [xF, fliplr(xF)];
+inBetween = [curve1, fliplr(curve2)];
+fill(x2, inBetween, 'g');
+hold on;
+plot(xF, avg_vF, 'r', 'LineWidth', 2);
+
+%% convert to csv
+csvwrite('avgstd_vel_E.csv', [avg_vE; std_vE; xE]);
+csvwrite('avgstd_vel_F.csv', [avg_vF; std_vF; xF]);
+
+%% get peak velocities
+
+max_vel_E = max(Data_vel_E');
+max_vel_F = max(Data_vel_F');
+
+avg_max_vel_E = mean(max_vel_E)
+std_max_vel_E = std(max_vel_E)
+avg_max_vel_F = mean(max_vel_F)
+std_max_vel_F = std(max_vel_F)
+
+% because we have two vectors of different lengths
+group = repelem(1:2, 1, [numel(max_vel_E'),numel(max_vel_F')]);
+
+max_vel = [max_vel_E, max_vel_F];
+
+p = anova1(max_vel, group)
+
+
+%% get peak acceleration
+
+max_acc_E = max(Data_acc_E');
+max_acc_F = max(Data_acc_F');
+
+avg_max_acc_E = mean(max_acc_E)
+std_max_acc_E = std(max_acc_E)
+avg_max_acc_F = mean(max_acc_F)
+std_max_acc_F = std(max_acc_F)
+
+% because we have two vectors of different lengths
+group = repelem(1:2, 1, [numel(max_acc_E'),numel(max_acc_F')]);
+
+max_acc = [max_acc_E, max_acc_F];
+
+p = anova1(max_acc, group)
+
+
+
+
+
+
+
