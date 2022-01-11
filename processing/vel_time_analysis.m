@@ -199,3 +199,19 @@ plot(Data(1,:), Data(3,:), 'g.');
 ylim([0, 2]);
 xlabel('$x (m)$','interpreter','latex','fontsize',15);
 ylabel('$\dot{x} (m/s)$','interpreter','latex','fontsize',15);
+
+%% convert to csv
+FileData = load('vel-t-m-data-sepaE.mat');
+csvwrite('vel-t-m-data-sepaE.csv', FileData.Data_separated);
+
+
+%% down sampling
+plot(tmp(1,:),  [tmp_d(1,:), 0], 'g.')
+
+oL = length(tmp_d) + 1;
+ds_tmp_d = interp1(1:oL, [tmp_d(1,:), 0], linspace(1,oL,100));
+oL = length(tmp);
+ds_tmp = interp1(1:oL, tmp(1,:), linspace(1,oL,100));
+
+hold on;
+plot(ds_tmp, ds_tmp_d, 'r.')
