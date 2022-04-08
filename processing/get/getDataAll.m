@@ -19,7 +19,7 @@ function [train] = getDataAll()
 %     a = {'All', 'plastic-cup'};
 %     b = {'Kunpeng', 'plastic-cup'};
     
-    V = [a1;a2;a3;b1;b2;b3;b4;c1;c2;d1;d2;e1];
+    V = [a1;a2;a3;b1;b2;b3;b4;b5;c1;c2;d1;d2;e1];
     m = length(V);
     
     idx = randperm(m);
