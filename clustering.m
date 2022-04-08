@@ -186,27 +186,41 @@ end
 
 figure();
 hold on;
-plot(max_dE, max_ddE, 'ro','MarkerSize',12);
-plot(max_dF, max_ddF, 'bo','MarkerSize',12);
+plot(max_dE, id_E, 'ro','MarkerSize',12);
+plot(max_dF, id_F, 'bo','MarkerSize',12);
 
-%% Perform unsupervised Clustering
+%% Perform unsupervised Clustering 
+% K-means (dependent on data quantity)
 
 X = [[max_dE;id_E],[max_dF;id_F]]';
 
-[idx,C] = kmeans(X,3);
+[idx,C] = kmeans(X,2);
 
 % plot
 
 figure;
-plot(X(idx==1,1),X(idx==1,2),'r.','MarkerSize',12)
+plot(X(idx==1,1),X(idx==1,2),'b.','MarkerSize',12)
 hold on
-plot(X(idx==2,1),X(idx==2,2),'b.','MarkerSize',12)
-hold on
-plot(X(idx==3,1),X(idx==3,2),'g.','MarkerSize',12)
+plot(X(idx==2,1),X(idx==2,2),'r.','MarkerSize',12)
+% hold on
+% plot(X(idx==3,1),X(idx==3,2),'g.','MarkerSize',12)
 plot(C(:,1),C(:,2),'kx',...
      'MarkerSize',15,'LineWidth',3) 
-legend('Cluster 1','Cluster 2','Cluster 3','Centroids',...
+legend('Cluster 1','Cluster 2','Centroids',...
        'Location','NW')
 title 'Cluster Assignments and Centroids'
 hold off
+
+%% Perform unsupervised Clustering 
+% DBScan 
+
+X = [[max_dE;id_E],[max_dF;id_F]]';
+
+
+idx = dbscan(X,0.05,5);
+
+gscatter(X(:,1),X(:,2),idx);
+title('DBSCAN Using Euclidean Distance Metric')
+
+
 
