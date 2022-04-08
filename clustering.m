@@ -14,7 +14,7 @@ clear F3
 clear Fn
 
 % plotting?
-plotting = 1;
+plotting = 0;
 
 %% Remove Non-Zeros - Empty
 
@@ -45,13 +45,6 @@ end
 
 %% computing the first and second time derivative
 
-% dt = 1/120;
-% for i=1:length(E3)
-%     tmp = E3{i};
-%     tmp_d{i} = diff(tmp,1,2)/dt;
-%     tmp_2d{i} = diff(tmp_d{i},1,2)/dt;
-% end
-
 dt = 1/120;
 for i=1:length(E3)
     
@@ -71,46 +64,16 @@ for i=1:length(E3)
 end
 
 for i=1:length(E3)
-%     % x
-%     xT = E3{i}(:,end);
-%     Norm1 = [];
-%     for j=1:length(E3{i})
-%         dis = xT - E3{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
-%     % normalized over distance
-%     Norm2 = Norm1/max(Norm1);
-%     Emp3Dnorm{i} = [Norm2'];
-%     
-%     % dx1/dt1
-%     Norm1 = [];
-%     for j=1:length(tmp_d{i})
-%         dis = tmp_d{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
-%     d3tmp_dE{i} = [Norm1'];
-%     
-%     % dx2/dt2
-%     Norm1 = [];
-%     for j=1:length(tmp_2d{i})
-%         dis = tmp_2d{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
 
     d3tmp_dE{i} = tmp_d{i}';
     d3tmp_2dE{i} = tmp_2d{i}';
     
-%     ThresholdToDelete = d3tmp_2dE{i} > 200;
-%     d3tmp_2dE{i}(ThresholdToDelete) = [];
-%     
-%     Emp3Dnorm{i}(ThresholdToDelete) = [];
-%     d3tmp_dE{i}(ThresholdToDelete) = [];
+    % remove outlier
+    ThresholdToDelete = d3tmp_2dE{i} > 200;
+    d3tmp_2dE{i}(ThresholdToDelete) = [];
+    
+    Emp3Dnorm{i}(ThresholdToDelete) = [];
+    d3tmp_dE{i}(ThresholdToDelete) = [];
 end
 
 [plotx, ploty, plotz] = deal([]);
@@ -179,46 +142,16 @@ for i=1:length(F3)
 end
 
 for i=1:length(F3)
-    % x
-%     xT = F3{i}(:,end);
-%     Norm1 = [];
-%     for j=1:length(F3{i})
-%         dis = xT - F3{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
-%     % normalized over distance
-%     Norm2 = Norm1/max(Norm1);
-%     Fmp3Dnorm{i} = [Norm2'];
-    
-%     % dx1/dt1
-%     Norm1 = [];
-%     for j=1:length(tmp_d{i})
-%         dis = tmp_d{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
-%     d3tmp_dF{i} = [Norm1'];
-%     
-%     % dx2/dt2
-%     Norm1 = [];
-%     for j=1:length(tmp_2d{i})
-%         dis = tmp_2d{i}(:,j);
-%         disN = norm(dis,2);
-%         Norm1 = [Norm1; disN];
-%        
-%     end
 
     d3tmp_dF{i} = tmp_d{i}';
     d3tmp_2dF{i} = tmp_2d{i}';
+
+    % remove outlier    
+    ThresholdToDelete = d3tmp_2dF{i} > 200;
+    d3tmp_2dF{i}(ThresholdToDelete) = [];
     
-%     ThresholdToDelete = d3tmp_2dF{i} > 200;
-%     d3tmp_2dF{i}(ThresholdToDelete) = [];
-%     
-%     Fmp3Dnorm{i}(ThresholdToDelete) = [];
-%     d3tmp_dF{i}(ThresholdToDelete) = [];
+    Fmp3Dnorm{i}(ThresholdToDelete) = [];
+    d3tmp_dF{i}(ThresholdToDelete) = [];
     
 end
 
@@ -253,7 +186,27 @@ end
 
 figure();
 hold on;
-plot(max_dE, id_E, 'ro','MarkerSize',12);
-plot(max_dF, id_F, 'bo','MarkerSize',12);
+plot(max_dE, max_ddE, 'ro','MarkerSize',12);
+plot(max_dF, max_ddF, 'bo','MarkerSize',12);
 
+%% Perform unsupervised Clustering
+
+X = [[max_dE;id_E],[max_dF;id_F]]';
+
+[idx,C] = kmeans(X,3);
+
+% plot
+
+figure;
+plot(X(idx==1,1),X(idx==1,2),'r.','MarkerSize',12)
+hold on
+plot(X(idx==2,1),X(idx==2,2),'b.','MarkerSize',12)
+hold on
+plot(X(idx==3,1),X(idx==3,2),'g.','MarkerSize',12)
+plot(C(:,1),C(:,2),'kx',...
+     'MarkerSize',15,'LineWidth',3) 
+legend('Cluster 1','Cluster 2','Cluster 3','Centroids',...
+       'Location','NW')
+title 'Cluster Assignments and Centroids'
+hold off
 
