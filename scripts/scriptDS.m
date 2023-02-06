@@ -1,7 +1,11 @@
 function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon, plots, freq)
 
     %% Define parameters
-    default = 0;    % No default
+    if plots
+        default = 1;    
+    else
+        default = 0;
+    end
     samp_freq_train = freq.train;
 
     %% Preprocessing - Empty
@@ -72,11 +76,11 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
 
     if plots
         f1 = figure(1);
-        filename = ['/output/train/E-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        filename = ['/output/test_2023/E-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
         saveas(f1, [pwd, filename]);
 
         f2 = figure(2);
-        filename = ['/output/train/F-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        filename = ['/output/test_2023/F-e1e2-K' num2str(K) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
         saveas(f2, [pwd, filename]);
     end
 
@@ -112,7 +116,7 @@ function scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel, epsilon,
         F1 = {'F1 measure Train', 'F1 measure Test'; F1_train, F1_test};
 
         t = table([Train; Test; ConfTrain; ConfTest; F0; F1], 'VariableNames', {'Train_Test_dataset'});
-        filename = ['output/train/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsilon) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
+        filename = ['output/test_2023/dataset-K' num2str(K) '-minVel' num2str(minVel) '-epsi' num2str(epsilon) '-' datestr(now,'mm-dd-yyyy-HH-MM-SS')];
         writetable(t, [filename '.txt']);
     end
 
