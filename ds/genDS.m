@@ -53,13 +53,9 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
     %% Save to files
 
     if type == 'F'
-        save('param/PriorsF.mat', 'Priors')
-        save('param/MuF.mat', 'Mu')
         save('param/SigmaF.mat', 'Sigma')
 
     elseif type == 'E'
-        save('param/PriorsE.mat', 'Priors')
-        save('param/MuE.mat', 'Mu')
         save('param/SigmaE.mat', 'Sigma')
     end
 
