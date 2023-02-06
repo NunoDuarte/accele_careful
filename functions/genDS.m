@@ -12,6 +12,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
                                        % tolerance for the optimization solver [default: 10^-10]
         options.max_iter = 1000;       % Maximum number of iteration for the solver [default: i_max=1000]
         options.objective = 'likelihood';    % 'likelihood': use likelihood as criterion to
+        options.plot = 1;               % plot the GMMs
 
     else
         options.tol_mat_bias = 10^-3; % A very small positive scalar to avoid
@@ -19,6 +20,7 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
         options.tol_stopping= 10^-10;  % A small positive scalar defining the stoppping
         options.max_iter = 1000;       % Maximum number of iteration for the solver [default: i_max=1000]
         options.objective = 'likelihood';    % 'likelihood': use likelihood as criterion to
+        options.plot = 0;               % do NOT plot the GMMs
 
     end
 
@@ -51,13 +53,9 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
     %% Save to files
 
     if type == 'F'
-        save('param/PriorsF.mat', 'Priors')
-        save('param/MuF.mat', 'Mu')
         save('param/SigmaF.mat', 'Sigma')
 
     elseif type == 'E'
-        save('param/PriorsE.mat', 'Priors')
-        save('param/MuE.mat', 'Mu')
         save('param/SigmaE.mat', 'Sigma')
     end
 
@@ -67,54 +65,56 @@ function K = genDS(F, default, options, K, ~, samp_freq, type)
     [expData(2:nbVar,:), expSigma] = GMR(Priors, Mu, Sigma,  expData(1,:), [1], [2:nbVar]);
 
     %%
-    if nbVar == 2
-        % plotting the result
-        figure()
-        hold on; box on
-        [h1, h2] = plotGMM(Mu(1:2,:), Sigma(1:2,1:2,:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
+    if options.plot
+        if nbVar == 2
+            % plotting the result
+            figure()
+            hold on; box on
+            [h1, h2] = plotGMM(Mu(1:2,:), Sigma(1:2,1:2,:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
 
-        [h3  , h4] = plotGMM(expData([1:2],:), expSigma([1],[1],:), [0 0 .8], 2);
-        axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(2,:))-0.01 max(Data(2,:))+0.01]);
-        h3 = plot(Data(1,:),Data(2,:), 'r.');
-        legend([h1 h4 h3], 'Gaussian Mixture Components', 'Mean Regression Signal', 'Recorded Demonstrations');
-        xlabel('$\xi_x (m)$','interpreter','latex','fontsize',15);
-        ylabel('$\dot{\xi}_x (m/s)$','interpreter','latex','fontsize',15);
+            [h3  , h4] = plotGMM(expData([1:2],:), expSigma([1],[1],:), [0 0 .8], 2);
+            axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(2,:))-0.01 max(Data(2,:))+0.01]);
+            h3 = plot(Data(1,:),Data(2,:), 'r.');
+            legend([h1 h4 h3], 'Gaussian Mixture Components', 'Mean Regression Signal', 'Recorded Demonstrations');
+            xlabel('$\xi_x (m)$','interpreter','latex','fontsize',15);
+            ylabel('$\dot{\xi}_x (m/s)$','interpreter','latex','fontsize',15);
 
-    elseif nbVar > 2
-        % plotting the result
-        figure()
-        hold on; box on
-        [h1, h2] = plotGMM(Mu(1:2,:), Sigma(1:2,1:2,:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
+        elseif nbVar > 2
+            % plotting the result
+            figure()
+            hold on; box on
+            [h1, h2] = plotGMM(Mu(1:2,:), Sigma(1:2,1:2,:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
 
-        [h3  , h4] = plotGMM(expData([1:2],:), expSigma([1],[1],:), [0 0 .8], 2);
-        axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(2,:))-0.01 max(Data(2,:))+0.01]);
-        h3 = plot(Data(1,:),Data(2,:), 'r.');
-        legend([h1 h4 h3], 'Gaussian Mixture Components', 'Mean Regression Signal', 'Recorded Demonstrations');
-        xlabel('$\xi_y (m)$','interpreter','latex','fontsize',15);
-        ylabel('$\xi_z (m)$','interpreter','latex','fontsize',15);
-        % -----------//------------
+            [h3  , h4] = plotGMM(expData([1:2],:), expSigma([1],[1],:), [0 0 .8], 2);
+            axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(2,:))-0.01 max(Data(2,:))+0.01]);
+            h3 = plot(Data(1,:),Data(2,:), 'r.');
+            legend([h1 h4 h3], 'Gaussian Mixture Components', 'Mean Regression Signal', 'Recorded Demonstrations');
+            xlabel('$\xi_y (m)$','interpreter','latex','fontsize',15);
+            ylabel('$\xi_z (m)$','interpreter','latex','fontsize',15);
+            % -----------//------------
 
-        figure()
-        hold on; box on
-        plotGMM(Mu([1 3],:), Sigma([1 3],[1 3],:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
-        plot(Data(1,:),Data(3,:),'r.')
+            figure()
+            hold on; box on
+            plotGMM(Mu([1 3],:), Sigma([1 3],[1 3],:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
+            plot(Data(1,:),Data(3,:),'r.')
 
-        plotGMM(expData([1 3],:), expSigma([1 3],[1 3],:), [0 0 .8], 2);
-        axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(3,:)) max(Data(3,:))]);
-        xlabel('$\xi_y (m)$','interpreter','latex','fontsize',15);
-        ylabel('$\dot{\xi}_y (m/s)$','interpreter','latex','fontsize',15);
+            plotGMM(expData([1 3],:), expSigma([1 3],[1 3],:), [0 0 .8], 2);
+            axis([min(Data(1,:))-0.01 max(Data(1,:))+0.01 min(Data(3,:)) max(Data(3,:))]);
+            xlabel('$\xi_y (m)$','interpreter','latex','fontsize',15);
+            ylabel('$\dot{\xi}_y (m/s)$','interpreter','latex','fontsize',15);
 
-        % -----------//------------
+            % -----------//------------
 
-        figure()
-        hold on; box on
-        plotGMM(Mu([2 4],:), Sigma([2 4],[2 4],:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
-        plot(Data(2,:),Data(4,:),'r.')
+            figure()
+            hold on; box on
+            plotGMM(Mu([2 4],:), Sigma([2 4],[2 4],:), [0.6 1.0 0.6], 1,[0.6 1.0 0.6]);
+            plot(Data(2,:),Data(4,:),'r.')
 
-        plotGMM(expData([2 4],:), expSigma([2 3],[2 3],:), [0 0 .8], 2);
-        axis([min(Data(2,:))-0.01 max(Data(2,:))+0.01 min(Data(4,:))-0.01 max(Data(4,:))+0.01]);
-        xlabel('$\xi_z (m)$','interpreter','latex','fontsize',15);
-        ylabel('$\dot{\xi}_z (m/s)$','interpreter','latex','fontsize',15);
+            plotGMM(expData([2 4],:), expSigma([2 3],[2 3],:), [0 0 .8], 2);
+            axis([min(Data(2,:))-0.01 max(Data(2,:))+0.01 min(Data(4,:))-0.01 max(Data(4,:))+0.01]);
+            xlabel('$\xi_z (m)$','interpreter','latex','fontsize',15);
+            ylabel('$\dot{\xi}_z (m/s)$','interpreter','latex','fontsize',15);
 
+        end
     end
 end

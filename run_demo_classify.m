@@ -3,7 +3,7 @@ clear all
 clc
 
 % change to correct directory
-cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
+%cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
 
 addpath('processing')
 addpath('data')
@@ -14,18 +14,17 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Leo', 'plastic-cup');
+[E, F] = read('All', 'plastic-cup');
 %readQMUL;
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = E{5}; 
+testX = F{1}; 
 
-% remove nonzeros
-testXn(:,1) = nonzeros(testX(:,2));
-testXn(:,2) = nonzeros(testX(:,3));
-testXn(:,3) = nonzeros(testX(:,4));
+% preprocess data
+testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
+testXn = testXn(all(~isnan(testXn),2),:);  % remove rows of NANs  
 test3{1}(1,:) = testXn(:,1)';
 test3{1}(2,:) = testXn(:,2)';
 test3{1}(3,:) = testXn(:,3)'; 
@@ -118,7 +117,7 @@ b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
 epsilon = 0.2; % adaptation rate
-minVel = 0.2; %
+minVel = 0.1; %
 
 d = 1; %dimension of data
 xT = 0;

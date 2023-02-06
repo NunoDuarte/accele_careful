@@ -13,26 +13,24 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-% [E, F] = read('Leo', 'plastic-cup');
-%readQMUL;
-[E, ~] = readIST('empty');
-[~, F] = readIST('full');
+[E, F] = read('All', 'plastic-cup');
+
+% % readQMUL;
+% [E, ~] = readIST('empty');
+% [~, F] = readIST('full');
 
 % plotting?
-plotting = 1;
+plotting = 0;
 
 %% Remove Non-Zeros - Empty
 
 if plotting
-    [plotx, ploty, plotz] = deal(0);
+    [plotx, ploty, plotz] = deal([]);
 end
 
 for i=1:length(E)
-    E{i} = E{i}(all(~isnan(E{i}),2),:);  % for nan - rows
-    En{i}(:,1) = (E{i}(:,2));
-    En{i}(:,2) = (E{i}(:,3));
-    En{i}(:,3) = (E{i}(:,4));
-    
+    En{i} = E{i}(any(E{i},2),2:4);          % remove only full rows of 0s
+    En{i} = En{i}(all(~isnan(En{i}),2),:);  % remove rows of NANs    
     E3{i}(1,:) = En{i}(:,1)';
     E3{i}(2,:) = En{i}(:,2)';
     E3{i}(3,:) = En{i}(:,3)';       
@@ -50,10 +48,6 @@ if plotting
     figure;
     plot3(ploty, plotx, plotz, '.');
 end
-
-%%
-plotting = 1;    % do you want to plot the 3D versions?
-Emp3D = processData(E3, plotting);
 
 %% Generate a DS for Empty Cups
 % do you want the default parameters?
@@ -90,16 +84,12 @@ genDS(Emp3Dnorm, default, [], [], [], samp_freq, 'E');
 %% Remove Non Zeros
 
 if plotting
-    [plotx, ploty, plotz] = deal(0);
+    [plotx, ploty, plotz] = deal([]);
 end
 
-% out = A(all(~isnan(A),2),:);  % for nan - rows
-
 for i=1:length(F)
-    F{i} = F{i}(all(~isnan(F{i}),2),:);  % for nan - rows
-    Fn{i}(:,1) = (F{i}(:,2));
-    Fn{i}(:,2) = (F{i}(:,3));
-    Fn{i}(:,3) = (F{i}(:,4));
+    Fn{i} = F{i}(any(F{i},2),2:4);          % remove only full rows of 0s
+    Fn{i} = Fn{i}(all(~isnan(Fn{i}),2),:);  % remove rows of NANs    
     F3{i}(1,:) = Fn{i}(:,1)';
     F3{i}(2,:) = Fn{i}(:,2)';
     F3{i}(3,:) = Fn{i}(:,3)'; 

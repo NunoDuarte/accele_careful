@@ -1,4 +1,4 @@
-function [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P)
+function [train, test, Etrain, Etest, Ftrain, Ftest] = trainEPFLtestIST(P)
 
     % EPFL Dataset
 
