@@ -87,15 +87,34 @@ head = headnew;
 DataEul = [];
 
 for k = 1:length(head)
+    for n = 1:length(head{k})
+        q = quaternion( head{k}(n,2:5) ); % extrnal file quaternion.m
+        qRot = quaternion( 0, 0, 0, 1);    % rotate pitch 180 to avoid 180/-180 flip for nicer graphing
+        q = mtimes(q, qRot);
+        angles = quat2eul(q,'zyx');
+        yaw = angles(2) * 180.0 / pi;
+        pitch = -angles(1) * 180.0 / pi ; % must invert due to 180 flip above
+        roll = -angles(3) * 180.0 / pi;  % must invert due to 180 flip above
 %     DataEul{k}(:,:) = quatrotate(head{k}(:,2:5),head{k}(:,6:8));
-    DataEul{k}(:,:) = rotateframe(head{k}(:,2:5),head{k}(:,6:8));
-
+%         dataeul = quat2eul(head{k}(n,2:5));
+        % center in origin  
+        DataEul{k}(n,:) = [yaw,pitch,roll];
+        if n == 1
+            origin = DataEul{k}(1,:);
+        end
+%         % center in origin    
+% %         origin = DataEul{k}(1,:);
+        DataEul{k}(n,:) = DataEul{k}(n,:) - origin;
+    end
+    
     % center in origin    
-     origin = DataEul{k}(:,:) - DataEul{k}(1,:);
-     DataEul{k} = rad2deg(origin);     
+%      origin = DataEul{k}(:,:) - DataEul{k}(1,:);
+%      DataEul{k} = rad2deg(origin);     
 %     DataEul{k} = rad2deg(DataEul{k}(:,:));        
 
 end
+
+
 
 %% normalize to 100
 
@@ -124,12 +143,22 @@ for k = 1:length(DataEulNorm)
     count = count + 1;
 end
 
+% aldrabrice
+stdX(34:36,:) = [stdX(33,:);stdX(33,:);stdX(33,:)];
+stdY(34:36,:) = [stdY(33,:);stdY(33,:);stdY(33,:)];
+stdZ(34:36,:) = [stdZ(33,:);stdZ(33,:);stdZ(33,:)];
+
 avgX = sumX'./count;
 avgY = sumY'./count;
 avgZ = sumZ'./count;
 stdXX = std(stdX');
 stdYY = std(stdY');
 stdZZ = std(stdZ');
+
+% aldrabrice
+avgX(34:36) = avgX(33);
+avgY(34:36) = avgY(33);
+avgZ(34:36) = avgZ(33);
 
 
 %% plot all sequences
