@@ -1,4 +1,4 @@
-function [Etrain, Etest, Ftrain, Ftest] = getDataQMUL(P)
+function [Etrain, Etest, Ftrain, Ftest] = traintestQMUL(P)
 
     files = dir('/home/nuno/Documents/MATLAB/PhD/armMotionDS/fullvsNOTfull/data/QMUL/1/*.csv');
     fullpaths = fullfile({files.folder}, {files.name});

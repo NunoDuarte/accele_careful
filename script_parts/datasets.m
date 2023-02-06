@@ -1,4 +1,4 @@
-function [Etrain, Ftrain, train, test, Etest, Ftest] = scriptAllData(P)
+function [Etrain, Ftrain, train, test, Etest, Ftest] = datasets(P)
 
     %% train EPFL - test EPFL
     % P = 0.10;   % percentage train/test
@@ -19,13 +19,13 @@ function [Etrain, Ftrain, train, test, Etest, Ftest] = scriptAllData(P)
         Ftest = [Ftest, F];
     end
 
-    % [Etrain, Etest, Ftrain, Ftest] = getDataQMUL(P);
+    % [Etrain, Etest, Ftrain, Ftest] = traintestQMUL(P);
     % train = Etrain;
     % test = Etest;
     
 %     %% Both - train EPFL - test QMUL
-%     [train, test, Etrain, Etest, Ftrain, Ftest] = pickData(P);
+%     [train, test, Etrain, Etest, Ftrain, Ftest] = trainEPFLtestQMUL(P);
     
 %     %% Both - train EPFL - test IST
-%     [train, test, Etrain, Etest, Ftrain, Ftest] = pickDataIST(P);
+%     [train, test, Etrain, Etest, Ftrain, Ftest] = trainEPFLtestIST(P);
 end

@@ -5,10 +5,8 @@ clear
 clc
 
 addpath('data')
-addpath('ds')
-addpath('belief')
-addpath(genpath('processing/'))
-addpath('scripts')
+addpath(genpath('functions/'))
+addpath('script_parts')
 addpath('param')
 addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
@@ -50,11 +48,11 @@ for m = 1:length(minVel)
     for i=1:length(P)
         % get the data randomized
         for k=1:1
-            [Etrain, Ftrain, train, test, Etest, Ftest] = scriptAllData(P(i));
+            [Etrain, Ftrain, train, test, Etest, Ftest] = datasets(P(i));
 
             for n = 1:length(epsi)
 
-               scriptDS(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel(m), epsi(n), plots, freqs)
+               model(Etrain, Ftrain, train, test, Etest, Ftest, K, minVel(m), epsi(n), plots, freqs)
 %                close all;
             end
         end
