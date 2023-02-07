@@ -14,13 +14,13 @@ addpath('../../software/Khansari/SEDS/SEDS_lib')
 addpath('../../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('All', 'plastic-cup');
+[E, F] = read('Kunpeng', 'red-cup');
 %readQMUL;
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{1}; 
+testX = F{3}; 
 
 % preprocess data
 testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
@@ -50,24 +50,11 @@ end
 %samp_freq = 1/30; % for QMUL data
 samp_freq = 1/120; % for EPFL data
 
+
 [~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
 
 % flip Data to start at (0,0);
 Data = flip(Data')';
-
-% testXn = test3{1};
-% testXn = testXn - testXn(:,end);
-% testXn = round(testXn,3);
-% 
-% % do the norm of all dimensions
-% for n = 1:length(testXn)   
-%     testXnnorm(n) = norm(testXn(:,n));       
-% end
-% % testXnnorm = round(testXnnorm,4);
-% 
-% testXnnorm0 = testXnnorm - testXnnorm(:,end);
-% testXnnorm0 = testXnnorm0;
-% testXnnorm0 = round(testXnnorm0,3);
 
 %% Load Eigen Vectors
 
@@ -116,8 +103,8 @@ b = [b1, b2];
 b1_d = 0;
 b2_d = 0;
 b_d = [b1_d, b2_d];
-epsilon = 0.2; % adaptation rate
-minVel = 0.1; %
+epsilon = 0.12; % adaptation rate
+minVel = 0.18; %
 
 d = 1; %dimension of data
 xT = 0;

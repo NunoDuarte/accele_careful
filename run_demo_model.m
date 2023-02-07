@@ -20,7 +20,7 @@ addpath('../../software/Khansari/SEDS/GMR_lib')
 % [~, F] = readIST('full');
 
 % plotting?
-plotting = 0;
+plotting = 1;
 
 %% Remove Non-Zeros - Empty
 
@@ -44,9 +44,10 @@ for i=1:length(E)
 
 end
 
+% plot the 3D data with same final goal?
 if plotting
     figure;
-    plot3(ploty, plotx, plotz, '.');
+    Emp3D = plot_3d_data(E3, plotting);
 end
 
 %% Generate a DS for Empty Cups
@@ -76,6 +77,7 @@ for i=1:length(E3)
     end
     Emp3Dnorm{i} = [Norm2'];
 end
+
 %samp_freq = 1/30; % for QMUL data
 samp_freq = 1/120; % for EPFL/IST data
 
