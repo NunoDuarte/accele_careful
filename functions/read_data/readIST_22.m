@@ -8,8 +8,9 @@ function [Egan, Fgan, Eneu, Fneu] = readIST_22()
     subFolderNames(ismember(subFolderNames, 'first')) = [];
 
     % order sequence of careful (water) and not careful (empty) cups
-    c = [0, 2, 5, 6, 8, 9];
-    nc = [1, 3, 4, 7, 10, 11];
+    % order {0, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+    c = [0, 4, 7, 8, 10, 11];
+    nc = [1, 2, 3, 5, 6, 9];
 
     % loop for all P## files
     for k = 1 : length(subFolderNames)

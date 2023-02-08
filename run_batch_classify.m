@@ -45,7 +45,7 @@ e2{2} = Vf(:,2);
 
 %% Batch all files
 
-D = size(Fneu);
+D = size(Egan);
 
 for n=1:D(1)
     for m=1:D(2)
@@ -55,7 +55,7 @@ for n=1:D(1)
        %% Belief System for 2 DS
 
         % pick e trajectory
-        testX = Fneu{n,m};
+        testX = Fgan{n,m};
         if isempty(testX)
             continue
         end
