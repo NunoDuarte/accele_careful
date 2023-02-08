@@ -12,7 +12,7 @@ addpath('../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');
-[E, F] = readIST_22('P02', 'P02_neu_2');
+readIST_22;
 %readQMUL;
 
 %% Belief System for 2 DS

@@ -21,7 +21,7 @@ for k = 1 : length(subFolderNames)
     
     % loop for both GAN and neutral of each P##
     for l = 1 : length(subsubNames)
-        fprintf('Sub folder #%d = %s\n', k, subsubNames{l});
+%         fprintf('Sub folder #%d = %s\n', k, subsubNames{l});
         
         if contains(subsubNames{l},'GAN')
             
