@@ -5,15 +5,14 @@
 clear
 clc
 
-addpath('ds')
-addpath(genpath('processing/'))
+addpath(genpath('functions/'))
 addpath('data')
-addpath('belief')
-addpath('../../software/Khansari/SEDS/SEDS_lib')
-addpath('../../software/Khansari/SEDS/GMR_lib')
+addpath('../software/Khansari/SEDS/SEDS_lib')
+addpath('../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('All', 'plastic-cup');
+% [E, F] = readIST_22('IST_2022', 'first');
+[E, F] = readIST_22('P02', 'P02_neu_2');
 
 % % readQMUL;
 % [E, ~] = readIST('empty');
@@ -46,7 +45,6 @@ end
 
 % plot the 3D data with same final goal?
 if plotting
-    figure;
     Emp3D = plot_3d_data(E3, plotting);
 end
 

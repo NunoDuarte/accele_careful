@@ -5,22 +5,20 @@ clc
 % change to correct directory
 %cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
 
-addpath('processing')
+addpath(genpath('functions/'))
 addpath('data')
-addpath('ds')
-addpath('belief')
-addpath('param')
-addpath('../../software/Khansari/SEDS/SEDS_lib')
-addpath('../../software/Khansari/SEDS/GMR_lib')
+addpath('../software/Khansari/SEDS/SEDS_lib')
+addpath('../software/Khansari/SEDS/GMR_lib')
 
-% Which Person to choose (Salman, Leo, Bernardo)
-[E, F] = read('Kunpeng', 'red-cup');
+% Which Person to choose 
+% [E, F] = read('Kunpeng', 'red-cup');
+[E, F] = readIST_22('P02', 'P02_neu_2');
 %readQMUL;
 
 %% Belief System for 2 DS
 
 % pick e trajectory
-testX = F{3}; 
+testX = F{1}; 
 
 % preprocess data
 testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
@@ -55,6 +53,7 @@ samp_freq = 1/120; % for EPFL data
 
 % flip Data to start at (0,0);
 Data = flip(Data')';
+plot(Data(1,:), Data(2,:), '.')
 
 %% Load Eigen Vectors
 
