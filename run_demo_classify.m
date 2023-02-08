@@ -1,3 +1,4 @@
+%% Classify one file with existing trained model in 'param' folder
 %% Load Path
 clear all
 clc
@@ -7,8 +8,8 @@ clc
 
 addpath(genpath('functions/'))
 addpath('data')
+addpath('param')
 addpath('../software/Khansari/SEDS/SEDS_lib')
-addpath('../software/Khansari/SEDS/GMR_lib')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');

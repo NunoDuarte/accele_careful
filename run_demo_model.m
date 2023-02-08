@@ -7,6 +7,7 @@ clc
 
 addpath(genpath('functions/'))
 addpath('data')
+addpath('param')
 addpath('../software/Khansari/SEDS/SEDS_lib')
 addpath('../software/Khansari/SEDS/GMR_lib')
 
