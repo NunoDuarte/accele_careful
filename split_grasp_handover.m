@@ -29,7 +29,6 @@ nc = [1, 2, 3, 5, 6, 9];
 
 % loop for all P## files
 for k = 1 : length(subFolderNames)
-
     subpath = strcat(path,'/',subFolderNames{k});
     subfiles = dir(subpath);
     subdirFlags = [subfiles.isdir];
@@ -69,36 +68,64 @@ for k = 1 : length(subFolderNames)
                     % preprocess data
                     Data = data_norm_preprocessing(testX, samp_freq);
  
+                    % filter positive values of Data(1,:)
+                    logicalIndexes = Data(1,:) > 0;
+                    if sum(logicalIndexes) > 0
+                        index_last = find(logicalIndexes == 1, 1, 'last');
+                        Data(:,logicalIndexes) = [];
+                        hello1 = testX(index_last:end,:);
+                    else
+                        hello1 = testX;
+                    end
+                    
                     % filter out just a specific interval
                     logicalIndexes = Data(1,:) < 0 &  Data(1,:) > -0.4;
+                    
                     hold on;
                     TF = islocalmin(Data(2,logicalIndexes), 'MaxNumExtrema',3, 'FlatSelection','first', 'MinProminence',0.1);
                     result = find(TF==1);
                     vel_values = Data(2,result);
                     [argvalue, argmin] = min(vel_values);
-                    result = result(argmin);
-%                     plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
-                    fprintf('Sub folder %s, handover %d\n', subsubNames{l}, nc(id));
+                    if argvalue > 0.3       % reject local minima if value too large
+                        result = [];
+                    else
+                        result = result(argmin);
+                    end
+                    
+                    if indexE(id) == 2 || indexE(id) == 3
+                        handover = files(indexE(id)).name(1:2);
+                    else
+                        handover = files(indexE(id)).name(1);
+                    end
+                    plot(Data(1,:), Data(2,:), 'b.', Data(1,TF),Data(2,TF),'r*');
+                    fprintf('Empty Sub folder %s, handover %d\n', subsubNames{l}, nc(id));
 
                     % cut just the handover
-                    hello = testX(result:end,:);
+                    hello = hello1(result:end,:);
                     if ~isempty(hello)
                         initT = hello(1,1);     % reset time
                         hello(:,1) = hello(:,1) - initT;
 
                         % preprocess data to view output
                         Data = data_norm_preprocessing(hello, samp_freq);
-%                         plot(Data(1,:), Data(2,:), '.');
+                        plot(Data(1,:), Data(2,:), 'r.');
 
 
-                        filespath = strcat(subsubnewfolder,'/handoverE_', num2str(nc(id)), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverE_', handover, '.csv');
                         csvwrite(filespath, hello) 
                     else
-                        filespath = strcat(subsubnewfolder,'/handoverE_', num2str(nc(id)), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverE_', handover, '.csv');
                         initT = testX(1,1);     % reset time
                         testX(:,1) = testX(:,1) - initT;
                         csvwrite(filespath, testX)
                     end
+                    
+                    try
+                        waitforbuttonpress
+                        % Close figure or leave it open
+                        close()
+                    catch
+                    end    
                     
                 end
                 for id=1:length(indexF)
@@ -116,30 +143,47 @@ for k = 1 : length(subFolderNames)
                     vel_values = Data(2,result);
                     [argvalue, argmin] = min(vel_values);
                     result = result(argmin);
-%                     plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
+                    plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
                     
-                    handover = c(id);
-                    fprintf('Sub folder %s, handover %d\n', subsubNames{l}, handover);
+                    handover = files(indexF(id)).name(1);
+                    fprintf('Full Sub folder %s, handover %d\n', subsubNames{l}, c(id));
 
+                    % filter positive values of Data(1,:)
+                    logicalIndexes = Data(1,:) > 0;
+                    if sum(logicalIndexes) > 0
+                        index_last = find(logicalIndexes == 1, 1, 'last');
+                        Data(:,logicalIndexes) = [];
+                        hello1 = testX(index_last:end,:);
+                    else
+                        hello1 = testX;
+                    end
+                    
                     % cut just the handover
-                    hello = testX(result:end,:);
+                    hello = hello1(result:end,:);
                     if ~isempty(hello)
                         initT = hello(1,1);     % reset time
                         hello(:,1) = hello(:,1) - initT;
 
                         % preprocess data to view output
                         Data = data_norm_preprocessing(hello, samp_freq);
-%                         plot(Data(1,:), Data(2,:), '.');
+                        plot(Data(1,:), Data(2,:), '.');
 
 
-                        filespath = strcat(subsubnewfolder,'/handoverF_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverF_', handover, '.csv');
                         csvwrite(filespath, hello) 
                     else
-                        filespath = strcat(subsubnewfolder,'/handoverF_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverF_', handover, '.csv');
                         initT = testX(1,1);     % reset time
                         testX(:,1) = testX(:,1) - initT;
                         csvwrite(filespath, testX)
-                    end                
+                    end  
+                    
+                    try
+                        waitforbuttonpress
+                        % Close figure or leave it open
+                        close()
+                    catch
+                    end 
                    
                 end 
             end
@@ -167,45 +211,63 @@ for k = 1 : length(subFolderNames)
                     % preprocess data
                     Data = data_norm_preprocessing(testX, samp_freq);
  
+                    % filter positive values of Data(1,:)
+                    logicalIndexes = Data(1,:) > 0;
+                    if sum(logicalIndexes) > 0
+                        index_last = find(logicalIndexes == 1, 1, 'last');
+                        Data(:,logicalIndexes) = [];
+                        hello1 = testX(index_last:end,:);
+                    else
+                        hello1 = testX;
+                    end
+                    
                     % filter out just a specific interval
-                    logicalIndexes = Data(1,:) < 0 &  Data(1,:) > -0.4;
+                    logicalIndexes = Data(1,:) < -0.02 &  Data(1,:) > -0.4;
                     hold on;
                     TF = islocalmin(Data(2,logicalIndexes), 'MaxNumExtrema',3, 'FlatSelection','first', 'MinProminence',0.1);
                     result = find(TF==1);
                     vel_values = Data(2,result);
                     [argvalue, argmin] = min(vel_values);
-                    result = result(argmin);
-%                     plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
+                    if argvalue > 0.3       % reject local minima if value too large
+                        result = [];
+                    else
+                        result = result(argmin);
+                    end
+                    plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
                     
-                    handover = nc(id);
-                    fprintf('Sub folder %s, handover %d\n', subsubNames{l}, handover);
+                    if indexE(id) == 2 || indexE(id) == 3
+                        handover = files(indexE(id)).name(1:2);
+                    else
+                        handover = files(indexE(id)).name(1);
+                    end
+                    fprintf('Empty Sub folder %s, handover %d\n', subsubNames{l}, nc(id));
 
                     % cut just the handover
-                    hello = testX(result:end,:);
+                    hello = hello1(result:end,:);
                     if ~isempty(hello)
                         initT = hello(1,1);     % reset time
                         hello(:,1) = hello(:,1) - initT;
 
                         % preprocess data to view output
                         Data = data_norm_preprocessing(hello, samp_freq);
-%                         plot(Data(1,:), Data(2,:), '.');
+                        plot(Data(1,:), Data(2,:), '.');
 
 
-                        filespath = strcat(subsubnewfolder,'/handoverE_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverE_', handover, '.csv');
                         csvwrite(filespath, hello) 
                     else
-                        filespath = strcat(subsubnewfolder,'/handoverE_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverE_', handover, '.csv');
                         initT = testX(1,1);     % reset time
                         testX(:,1) = testX(:,1) - initT;
                         csvwrite(filespath, testX)
                     end
 
-%                     try
-%                         waitforbuttonpress
-%                         % Close figure or leave it open
-%                         close()
-%                     catch
-%                     end                     
+                    try
+                        waitforbuttonpress
+                        % Close figure or leave it open
+                        close()
+                    catch
+                    end                     
                     
                 end
                 for id=1:length(indexF)
@@ -214,6 +276,16 @@ for k = 1 : length(subFolderNames)
                     % preprocess data
                     Data = data_norm_preprocessing(testX, samp_freq);
  
+                    % filter positive values of Data(1,:)
+                    logicalIndexes = Data(1,:) > 0;
+                    if sum(logicalIndexes) > 0
+                        index_last = find(logicalIndexes == 1, 1, 'last');
+                        Data(:,logicalIndexes) = [];
+                        hello1 = testX(index_last:end,:);
+                    else
+                        hello1 = testX;
+                    end
+                    
                     % filter out just a specific interval
                     logicalIndexes = Data(1,:) < 0 &  Data(1,:) > -0.4;
                     hold on;
@@ -222,37 +294,37 @@ for k = 1 : length(subFolderNames)
                     vel_values = Data(2,result);
                     [argvalue, argmin] = min(vel_values);
                     result = result(argmin);
-%                     plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
+                    plot(Data(1,:), Data(2,:), '.', Data(1,TF),Data(2,TF),'r*');
                     
-                    handover = c(id);
-                    fprintf('Sub folder %s, handover %d\n', subsubNames{l}, handover);
+                    handover = files(indexF(id)).name(1);
+                    fprintf('Full Sub folder %s, handover %d\n', subsubNames{l}, c(id));
 
                     % cut just the handover
-                    hello = testX(result:end,:);
+                    hello = hello1(result:end,:);
                     if ~isempty(hello)
                         initT = hello(1,1);     % reset time
                         hello(:,1) = hello(:,1) - initT;
 
                         % preprocess data to view output
                         Data = data_norm_preprocessing(hello, samp_freq);
-%                         plot(Data(1,:), Data(2,:), '.');
+                        plot(Data(1,:), Data(2,:), '.');
 
 
-                        filespath = strcat(subsubnewfolder,'/handoverF_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverF_', handover, '.csv');
                         csvwrite(filespath, hello) 
                     else
-                        filespath = strcat(subsubnewfolder,'/handoverF_', num2str(handover), '.csv');
+                        filespath = strcat(subsubnewfolder,'/handoverF_', handover, '.csv');
                         initT = testX(1,1);     % reset time
                         testX(:,1) = testX(:,1) - initT;
                         csvwrite(filespath, testX)
                     end
 
-%                     try
-%                         waitforbuttonpress
-%                         % Close figure or leave it open
-%                         close()
-%                     catch
-%                     end                     
+                    try
+                        waitforbuttonpress
+                        % Close figure or leave it open
+                        close()
+                    catch
+                    end                     
                 end 
             end
 
