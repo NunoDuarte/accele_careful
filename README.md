@@ -30,7 +30,7 @@ TODO
 
 ## Citation
 
-* 
+* Duarte, N. F., Billard, A., & Santos-Victor, J. (2022). The Role of Object Physical Properties in Human Handover Actions: Applications in Robotics. IEEE Transactions on Cognitive and Developmental Systems.
 
 ## Relevant Information
 Deceleration phase Approach ([GitHub repository](https://github.com/NunoDuarte/carefull-detection))
