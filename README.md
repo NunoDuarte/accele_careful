@@ -6,6 +6,9 @@ Utilize the acceleration phase during handover actions to detect whether the man
 Check that it is solved:
 I have to find a way to get the data to match the eigen vectors. Perhaps smoothing, or time intervals
 
+## Dependency
+Khansari [SEDS_lib](https://cs.stanford.edu/people/khansari/DSMotions.html)  (so far TODO: remove dependency)
+
 ## Compatibility
 
 Successfully tested on:
