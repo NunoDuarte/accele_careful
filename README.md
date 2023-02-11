@@ -1,6 +1,4 @@
 # Acceleration Phase Carefulness Detection
-![matlab compatible](https://img.shields.io/badge/matlab-compatible-lightgrey.svg)
-
 Utilize the acceleration phase during handover actions to detect whether the manipulated object is soft/heavy/fragile/risky 
 
 - Eigen vectors in the acceleration phase
