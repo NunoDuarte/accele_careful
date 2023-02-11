@@ -11,7 +11,7 @@ Khansari [SEDS_lib](https://cs.stanford.edu/people/khansari/DSMotions.html)  (so
 
 ## Compatibility
 
-Successfully tested on:
+Successfully trained and tested on:
 * Mathworks MATLAB 2018a
 
 ## Getting Started
@@ -27,6 +27,10 @@ To run demos use:
 ```
 TODO
 ```
+
+## Train Model on own Dataset
+
+## Test new Model 
 
 ## Citation
 
