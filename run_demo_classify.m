@@ -9,11 +9,10 @@ clc
 addpath(genpath('functions/'))
 addpath('data')
 addpath('param')
-addpath('../software/Khansari/SEDS/SEDS_lib')
 
 % Which Person to choose 
-% [E, F] = read('Kunpeng', 'red-cup');
-readIST_22;     % [Egan, Fgan, Eneu, Fneu]
+[E, F] = read('Kunpeng', 'red-cup');
+% readIST_22;     % [Egan, Fgan, Eneu, Fneu]
 %readQMUL;
 
 %% Belief System for 2 DS
@@ -49,9 +48,40 @@ end
 %samp_freq = 1/30; % for QMUL data
 samp_freq = 1/120; % for EPFL data
 
+%% preprocess_demos
+%checking if a fixed time step is provided or not.
+dt = samp_freq;
+tol_cutting = 0.0001;
 
-[~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001); 
+Data=[];
+for i=1:length(Emp3Dnorm)
+    clear tmp tmp_d
+    
+    % de-noising data (not necessary)
+    tmp = smooth(Emp3Dnorm{i}(1,:),25); 
+    
+    % computing the first time derivative
+    tmp_d = diff(tmp,1,1)/dt;
+    
+    % trimming demonstrations
+    ind = find(sqrt(sum(tmp_d.*tmp_d,2))>tol_cutting);
+    tmp = tmp(min(ind):max(ind)+1,1);
+    tmp_d = tmp_d(min(ind):max(ind),1);
+    
+    % saving the initial point of each demo
+    x0 = tmp(1);
+    
+    %saving the final point (target) of each demo
+    xT = Emp3Dnorm{i}(end); 
+    
+    % shifting demos to the origin
+    tmp = tmp - repmat(xT,1,size(tmp,2));
+    
+    % saving demos next to each other
+    Data = [Data [tmp';tmp_d' 0]];
+end
 
+%% flip
 % flip Data to start at (0,0);
 Data = flip(Data')';
 plot(Data(1,:), Data(2,:), '.')
@@ -77,7 +107,6 @@ Fd = sqrt(diag(Df));
 e2{1} = Ve(:,2);
 e2{2} = Vf(:,2);
 
-
 %% Real Velocity of testX
 % dt = 0.02; % frequency 
 % 
@@ -91,28 +120,17 @@ e2{2} = Vf(:,2);
 % testX_d(1,i) = 0;
 % %testX_d = diff(testXn,1,2);
 
-%% Run each DS to get the desired velocity?
-opt_sim.dt = 0.02;
-opt_sim.i_max = 1;
-opt_sim.tol = 0.001;
-opt_sim.plot = 0;
+%% Classify motion% initial values
+b = [0.5, 0.5];         % 50% v 50%
+b_d = [0, 0];           %  0  v  0
+ee = [0 0];
+epsilon = 0.12;         % adaptation rate
+minVel = 0.18;          % minimum velocity considered
 
-b1 = 0.5;
-b2 = 0.5;
-b = [b1, b2];
-b1_d = 0;
-b2_d = 0;
-b_d = [b1_d, b2_d];
-epsilon = 0.12; % adaptation rate
-minVel = 0.18; %
-
-d = 1; %dimension of data
-xT = 0;
+% initialization
 Xd = [];
-
-B = [];
-B = [B; b];
 Er = [];
+B = [];
 
 K = 0; % out many values to average
 for j = 1:length(Data)-K-1   
@@ -120,7 +138,7 @@ for j = 1:length(Data)-K-1
 
     if abs(Data(2,j)) > minVel
         for i = 1:2
-
+            % compute real velocity
             outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));
 
             % rate of change for careful/not careful
@@ -130,11 +148,11 @@ for j = 1:length(Data)-K-1
             ed = -1*abs(outD(j) - xd(:,1));
             ee(i) = ed;   
 
-            %Xd(j,i) = xd(:,1)';
             Xd = [Xd, xd(:,1)'];
             b_d(i) = epsilon * (ed' + (b(i) - 0.5)*norm(xd(:,1), 2)); 
 
         end
+        % save the error
         Er = [Er;ee];
 
         B_d = winnertakeall(b, b_d);
@@ -147,8 +165,4 @@ for j = 1:length(Data)-K-1
     end
 
 end
-
-
-
-% probably smooting;
 
