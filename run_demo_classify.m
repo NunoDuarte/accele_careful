@@ -1,6 +1,6 @@
 %% Classify one file with existing trained model in 'param' folder
 %% Load Path
-clear test3
+clear all
 clc
 
 % change to correct directory
@@ -16,27 +16,21 @@ addpath('param')
 % readQMUL;
 
 % pick a trajectory
-demo = E{2}; 
+demo = F{1}; 
 
 %% preprocess data
 % remove 0s rows and NANs
 demo = demo(any(demo,2),2:4);        
 demo = demo(all(~isnan(demo),2),:);    
 
-% shift to origin
-xT = demo(end,:);
-dis = demo - xT;    % THIS IS IMPORTANT
+% set handover point as origin
+dis = demo - demo(end,:);
 
 % compute vector-wise L2-norm
 Norm1 = vecnorm(dis,2,2);
 
 % normalized over distance
-Norm2 = Norm1/max(Norm1);   % THIS IS IMPORTANT (-1) or not
-
-% flip data to have the acceleration phase at the end
-Norm2 = flip(Norm2);        % THIS IS IMPORTANT
-% transpose data
-demo_norm = Norm2';
+demo_norm = Norm1/max(Norm1);   % THIS IS IMPORTANT (-1) or not
 
 %% calculate velocity
 % pick sampling frequency
@@ -49,13 +43,13 @@ tmp = smooth(demo_norm,25);
 % computing the first time derivative
 tmp_d = diff(tmp,1,1)/samp_freq;
 
-tmp = tmp - repmat(tmp(end),1,size(tmp,2));
+%% Save data
+% set the acceleration back to the origin
+tmp = tmp - repmat(tmp(1),1,size(tmp,2));
 
-% saving demos next to each other
 Data=[];
-Data = [Data [tmp';tmp_d' 0]];
+Data = [Data [-1*tmp';-1*tmp_d' 0]];
 
-Data = flip(Data')';
 figure();
 plot(Data(1,:), Data(2,:), '.')
 
