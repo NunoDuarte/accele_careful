@@ -1,6 +1,6 @@
 %% Classify one file with existing trained model in 'param' folder
 %% Load Path
-clear all
+clear test3
 clc
 
 % change to correct directory
@@ -12,115 +12,68 @@ addpath('param')
 
 % Which Person to choose 
 [E, F] = read('Kunpeng', 'red-cup');
-% readIST_22;     % [Egan, Fgan, Eneu, Fneu]
-%readQMUL;
+% [Egan, Fgan, Eneu, Fneu] = readIST_22();  
+% readQMUL;
 
-%% Belief System for 2 DS
+% pick a trajectory
+demo = E{2}; 
 
-% pick e trajectory
-testX = F{1}; 
+%% preprocess data
+% remove 0s rows and NANs
+demo = demo(any(demo,2),2:4);        
+demo = demo(all(~isnan(demo),2),:);    
 
-% preprocess data
-testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
-testXn = testXn(all(~isnan(testXn),2),:);  % remove rows of NANs  
-test3{1}(1,:) = testXn(:,1)';
-test3{1}(2,:) = testXn(:,2)';
-test3{1}(3,:) = testXn(:,3)'; 
+% shift to origin
+xT = demo(end,:);
+dis = demo - xT;    % THIS IS IMPORTANT
 
-%% Center the Data in the Origin
+% compute vector-wise L2-norm
+Norm1 = vecnorm(dis,2,2);
 
-for i=1:length(test3)
-    xT = test3{i}(:,end);
-    Norm1 = [];
-    for j=1:length(test3{i})
-        dis = xT - test3{i}(:,j);
-        disN = norm(dis,2);
-        Norm1 = [Norm1; disN];
-        
-        % normalized over distance
-        Norm2 = Norm1/max(Norm1);
-        
-        % flip data to have the acceleration phase at the end
-        Norm2 = flip(Norm2);
-        Emp3Dnorm{i} = Norm2';
-    end
-end
+% normalized over distance
+Norm2 = Norm1/max(Norm1);   % THIS IS IMPORTANT (-1) or not
+
+% flip data to have the acceleration phase at the end
+Norm2 = flip(Norm2);        % THIS IS IMPORTANT
+% transpose data
+demo_norm = Norm2';
+
+%% calculate velocity
+% pick sampling frequency
 %samp_freq = 1/30; % for QMUL data
-samp_freq = 1/120; % for EPFL data
+samp_freq = 1/120; % for EPFL or IST data
 
-%% preprocess_demos
-%checking if a fixed time step is provided or not.
-dt = samp_freq;
-tol_cutting = 0.0001;
+% de-noising data (not necessary/optional)
+tmp = smooth(demo_norm,25); 
 
+% computing the first time derivative
+tmp_d = diff(tmp,1,1)/samp_freq;
+
+tmp = tmp - repmat(tmp(end),1,size(tmp,2));
+
+% saving demos next to each other
 Data=[];
-for i=1:length(Emp3Dnorm)
-    clear tmp tmp_d
-    
-    % de-noising data (not necessary)
-    tmp = smooth(Emp3Dnorm{i}(1,:),25); 
-    
-    % computing the first time derivative
-    tmp_d = diff(tmp,1,1)/dt;
-    
-    % trimming demonstrations
-    ind = find(sqrt(sum(tmp_d.*tmp_d,2))>tol_cutting);
-    tmp = tmp(min(ind):max(ind)+1,1);
-    tmp_d = tmp_d(min(ind):max(ind),1);
-    
-    % saving the initial point of each demo
-    x0 = tmp(1);
-    
-    %saving the final point (target) of each demo
-    xT = Emp3Dnorm{i}(end); 
-    
-    % shifting demos to the origin
-    tmp = tmp - repmat(xT,1,size(tmp,2));
-    
-    % saving demos next to each other
-    Data = [Data [tmp';tmp_d' 0]];
-end
+Data = [Data [tmp';tmp_d' 0]];
 
-%% flip
-% flip Data to start at (0,0);
 Data = flip(Data')';
+figure();
 plot(Data(1,:), Data(2,:), '.')
 
 %% Load Eigen Vectors
 
 SigmaE = load('SigmaE.mat');
 SigmaE = SigmaE.Sigma;
-
-[Ve,De] = eig(SigmaE(:,:,1));
-Ee1=Ve(:,1); 
-Ee2=Ve(:,2);
-Ed = sqrt(diag(De));
-
 SigmaF = load('SigmaF.mat');
 SigmaF = SigmaF.Sigma;
 
-[Vf,Df] = eig(SigmaF(:,:,1));
-Fe1=Vf(:,1); 
-Fe2=Vf(:,2);
-Fd = sqrt(diag(Df));
+[Ve,~] = eig(SigmaE(:,:,1));
+[Vf,~] = eig(SigmaF(:,:,1));
 
 e2{1} = Ve(:,2);
 e2{2} = Vf(:,2);
 
-%% Real Velocity of testX
-% dt = 0.02; % frequency 
-% 
-% for i=2:length(testXn(1,:))
-% %     if i==2
-% %         testX_d(1,i-1) = -0.2;
-% %     else
-%         testX_d(1,i-1) = (testXnnorm0(1,i) - testXnnorm0(1,i-1))/dt;
-% %     end
-% end
-% testX_d(1,i) = 0;
-% %testX_d = diff(testXn,1,2);
-
-%% Classify motion% initial values
+%% Classify motion
+% initial values
 b = [0.5, 0.5];         % 50% v 50%
 b_d = [0, 0];           %  0  v  0
 ee = [0 0];
@@ -132,8 +85,7 @@ Xd = [];
 Er = [];
 B = [];
 
-K = 0; % out many values to average
-for j = 1:length(Data)-K-1   
+for j = 1:length(Data)-1   
     ee = [0 0];
 
     if abs(Data(2,j)) > minVel
