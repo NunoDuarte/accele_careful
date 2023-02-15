@@ -44,14 +44,15 @@ tmp = smooth(demo_norm,25);
 tmp_d = diff(tmp,1,1)/samp_freq;
 
 %% Save data
-% set the acceleration back to the origin
+% set the acceleration back to the origin (if you want to plot)
 tmp = tmp - repmat(tmp(1),1,size(tmp,2));
 
 Data=[];
-Data = [Data [-1*tmp';-1*tmp_d' 0]];
+Data = [Data [tmp';tmp_d' 0]];
 
+%% Plot Data
 figure();
-plot(Data(1,:), Data(2,:), '.')
+plot(-1*Data(1,:), -1*Data(2,:), '.')
 
 %% Load Eigen Vectors
 
