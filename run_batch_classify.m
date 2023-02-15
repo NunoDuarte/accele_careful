@@ -9,7 +9,6 @@ clc
 addpath(genpath('functions/'))
 addpath('data')
 addpath('param')
-addpath('../software/Khansari/SEDS/SEDS_lib')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');
@@ -79,43 +78,6 @@ for n=1:len(1)
 
         Data=[];
         Data = [Data [tmp';tmp_d' 0]];       
-       
-%         % pick e trajectory
-%         testX = Egan{n,m};
-%         if isempty(testX)
-%             continue
-%         end
-% 
-%         % preprocess data
-%         testXn = testX(any(testX,2),2:4);          % remove only full rows of 0s
-%         testXn = testXn(all(~isnan(testXn),2),:);  % remove rows of NANs  
-%         test3{1}(1,:) = testXn(:,1)';
-%         test3{1}(2,:) = testXn(:,2)';
-%         test3{1}(3,:) = testXn(:,3)'; 
-% 
-%         %% Center the Data in the Origin
-% 
-%         for i=1:length(test3)
-%             xT = test3{i}(:,end);
-%             Norm1 = [];
-%             for j=1:length(test3{i})
-%                 dis = xT - test3{i}(:,j);
-%                 disN = norm(dis,2);
-%                 Norm1 = [Norm1; disN];
-% 
-%                 % normalized over distance
-%                 Norm2 = Norm1/max(Norm1);
-% 
-%                 % flip data to have the acceleration phase at the end
-%                 Norm2 = flip(Norm2);
-%                 Emp3Dnorm{i} = Norm2';
-%             end
-%         end
-% 
-%         [~ , ~, Data, index] = preprocess_demos(Emp3Dnorm, samp_freq, 0.0001);
-% 
-%         % flip Data to start at (0,0); 
-%         Data = flip(Data')';
 
         %% Classify motion
         % initial values
