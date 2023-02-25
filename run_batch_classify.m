@@ -8,12 +8,30 @@ clc
 
 addpath(genpath('functions/'))
 addpath('data')
-addpath('param')
+addpath('param_KrAc_best/')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');
-[Egan, Fgan, Eneu, Fneu] = readIST_22();  
-D = Fgan;
+[Egan, Fgan, Eneu, Fneu] = readIST_22();
+
+% % remove outliers
+% Eneu{9,3} = [];
+% Fgan{10,1} = [];
+% Egan{10,1} = [];
+% Fneu{11,1} = [];
+% Fneu{11,3} = [];
+% Fneu{11,4} = [];
+% Fneu{11,5} = [];
+% Fneu{12,1} = [];
+% Eneu{12,1} = [];
+% Fgan{12,1} = [];
+% Egan{12,3} = [];
+
+%% 
+matrix{1} = Egan;
+matrix{2} = Fgan;
+matrix{3} = Eneu;
+matrix{4} = Fneu;
 %readQMUL;
 
 % set correct data frequency
@@ -43,103 +61,117 @@ e2{2} = Vf(:,2);
 
 %% Batch all files
 
-len = size(D);
-for n=1:len(1)
-    for m=1:len(2)
-        
-        demo = D{n,m};
-        if isempty(demo)
-            continue
-        end        
-        %% preprocess data
-        % remove 0s rows and NANs
-        demo = demo(any(demo,2),2:4);        
-        demo = demo(all(~isnan(demo),2),:);    
+for mat=1:4
+    clear b_all
+    D = matrix{mat};
+    if mat == 1
+        fprintf('Egan \n');
+    elseif mat == 2
+        fprintf('Fgan \n');     
+    elseif mat == 3
+        fprintf('Eneu \n');     
+    elseif mat == 4
+        fprintf('Fneu \n');       
+    end
+    len = size(D);
+    for n=1:len(1)
+        for m=1:len(2)
 
-        % set handover point as origin
-        dis = demo - demo(end,:);
+            demo = D{n,m};
+            if isempty(demo)
+                continue
+            end        
+            %% preprocess data
+            % remove 0s rows and NANs
+            demo = demo(any(demo,2),2:4);        
+            demo = demo(all(~isnan(demo),2),:);    
 
-        % compute vector-wise L2-norm
-        Norm1 = vecnorm(dis,2,2);
+            % set handover point as origin
+            dis = demo - demo(end,:);
 
-        % normalized over distance
-        demo_norm = Norm1/max(Norm1);   % THIS IS IMPORTANT (-1) or not
+            % compute vector-wise L2-norm
+            Norm1 = vecnorm(dis,2,2);
 
-        %% calculate velocity
-        % de-noising data (not necessary/optional)
-        tmp = smooth(demo_norm,25); 
+            % normalized over distance
+            demo_norm = Norm1/max(Norm1);   % THIS IS IMPORTANT
 
-        % computing the first time derivative
-        tmp_d = diff(tmp,1,1)/samp_freq;
-        
-        %% Save data
-        % set the acceleration back to the origin
-        tmp = tmp - repmat(tmp(1),1,size(tmp,2));
+            %% calculate velocity
+            % de-noising data (not necessary/optional)
+            tmp = smooth(demo_norm,25); 
 
-        Data=[];
-        Data = [Data [tmp';tmp_d' 0]];       
+            % computing the first time derivative
+            tmp_d = diff(tmp,1,1)/samp_freq;
 
-        %% Classify motion
-        % initial values
-        b = [0.5, 0.5];         % 50% v 50%
-        b_d = [0, 0];           %  0  v  0
-        ee = [0 0];
-        epsilon = 0.12;         % adaptation rate
-        minVel = 0.18;          % minimum velocity considered
+            %% Save data
+            % set the acceleration back to the origin
+            tmp = tmp - repmat(tmp(1),1,size(tmp,2));
 
-        % initialization
-        Xd = [];
-        Er = [];
-        B = [];
+            Data=[];
+            Data = [Data [tmp';0 tmp_d']];       
 
-        for j = 1:length(Data)-1 
-            B = [B; b];
+            %% Classify motion
+            % initial values
+            b = [0.5, 0.5];         % 50% v 50%
+            b_d = [0, 0];           %  0  v  0
+            ee = [0 0];
+            epsilon = 0.14;         % adaptation rate
+            minVel = 0.16;          % minimum velocity considered
 
-            if abs(Data(2,j)) > minVel
-                for i = 1:2
-                    % compute real velocity
-                    outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));
+            % initialization
+            Xd = [];
+            Er = [];
+            B = [];
 
-                    % rate of change for careful/not careful
-                    xd = abs((e2{i}(2)/e2{i}(1)));
+            for j = 1:length(Data)-1 
+                B = [B; b];
 
-                    % error (real velocity - desired velocity)
-                    ed = -1*abs(outD(j) - xd(:,1));
-                    ee(i) = ed;   
+                if abs(Data(2,j)) > minVel
+                    for i = 1:2
+                        % compute real velocity
+                        outD(j) = abs((Data(2,j+1)-Data(2,j))/(Data(1,j+1)-Data(1,j)));
 
-                    Xd = [Xd, xd(:,1)'];
-                    b_d(i) = epsilon * (ed' + (b(i) - 0.5)*norm(xd(:,1), 2)); 
+                        % rate of change for careful/not careful
+                        xd = abs((e2{i}(2)/e2{i}(1)));
 
+                        % error (real velocity - desired velocity)
+                        ed = -1*abs(outD(j) - xd(:,1));
+                        ee(i) = ed;   
+
+                        Xd = [Xd, xd(:,1)'];
+                        b_d(i) = epsilon * (ed' + (b(i) - 0.5)*norm(xd(:,1), 2)); 
+
+                    end
+                    % save the error
+                    Er = [Er;ee];
+
+                    B_d = winnertakeall(b, b_d);
+                    for i = 1:2
+                        b(i) = b(i) + B_d(i)*0.1;
+                        b(i) = max(0., min(1., b(i)));
+                    end
+                    b(2) = 1. - b(1);
                 end
-                % save the error
-                Er = [Er;ee];
 
-                B_d = winnertakeall(b, b_d);
-                for i = 1:2
-                    b(i) = b(i) + B_d(i)*0.1;
-                    b(i) = max(0., min(1., b(i)));
-                end
-                b(2) = 1. - b(1);
             end
-
-        end
-        [~, argmax] = max(b);
-        if argmax == 1
-            b_all{n,m} = 'Empty';
-        elseif argmax == 2
-            b_all{n,m} = 'Full';
+            [~, argmax] = max(b);
+            if argmax == 1
+                b_all{n,m} = 'Empty';
+            elseif argmax == 2
+                b_all{n,m} = 'Full';
+            end
         end
     end
+
+    tfull = nnz(strcmp(b_all,'Full'));
+    tempty = nnz(strcmp(b_all,'Empty'));
+
+    fprintf('Number of Full classifications: %d\n', tfull);
+    fprintf('Number of Empty classifications: %d\n', tempty);
+
+    tavgfull = tfull/(tfull+tempty);
+    tavgempty = 1-tavgfull;
+
+    fprintf('Average full %f and empty %f \n', tavgfull, tavgempty);
+    
 end
-
-tfull = nnz(strcmp(b_all,'Full'));
-tempty = nnz(strcmp(b_all,'Empty'));
-
-fprintf('Number of Full classifications: %d\n', tfull);
-fprintf('Number of Empty classifications: %d\n', tempty);
-
-tavgfull = tfull/(tfull+tempty);
-tavgempty = 1-tavgfull;
-
-fprintf('Average full %f and empty %f \n', tavgfull, tavgempty);
 
