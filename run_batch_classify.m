@@ -12,7 +12,7 @@ addpath('param_KrAc_best/')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');
-[Egan, Fgan, Eneu, Fneu] = readIST_22();
+[Egan, Fgan, Eneu, Fneu] = readIST_22handovers();
 
 % % remove outliers
 % Eneu{9,3} = [];
@@ -158,6 +158,17 @@ for mat=1:4
                 b_all{n,m} = 'Empty';
             elseif argmax == 2
                 b_all{n,m} = 'Full';
+            end
+            
+            % save B data
+            if mat == 1
+                all_BEgan{n,m} = B(:,1);
+            elseif mat == 2
+                all_BFgan{n,m} = B(:,1);
+            elseif mat == 3
+                all_BEneu{n,m} = B(:,1);
+            elseif mat == 4
+                all_BFneu{n,m} = B(:,1);
             end
         end
     end
