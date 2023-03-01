@@ -1,6 +1,7 @@
-% plot B data
-clear V;
+% plot B belief system 
+clear all;
 % pick the data
+addpath('output')
 data = {'all_BEgan'; 'all_BEneu'}; 
 
 % do you want to plot only the true positive cases?
@@ -12,12 +13,15 @@ careful = 0;
 size_of_traj = [];
 reaction_time = [];
 for k=1:2
+    % load file data
+    load(string(data(k)));
+    % load data
     V = eval(string(data(k)));
     for n=1:size(V,1)
         for m=1:size(V,2)
             if ~isempty(V{n,m})
                 if true_positives
-                    if any(V{n,m} == careful)
+                    if any(V{n,m} == 1 - careful)
                         hold on;
                         size_of_traj = [size_of_traj, length(V{n,m})];
                         plot(V{n,m}, 'b-.');
@@ -62,8 +66,8 @@ plot(x, Avg_reaction_time, 'r', 'LineWidth', 2);
 
 xlim([0, 250]);
 
-%% count the number of 1s in array
-
+%% Give the percentage of classified handovers over time
+% find correct and incorrect classifications(inv)
 complete_classf = reaction_time;
 complete_classf(complete_classf~=1)= 0;
 
@@ -72,6 +76,8 @@ complete_classf_inv(complete_classf_inv > 0) = -1;
 complete_classf_inv(complete_classf_inv == 0) = 1;
 complete_classf_inv(complete_classf_inv==-1) = 0;
 
-complete_classf_all = sum(complete_classf)/size_reaction_time(1) + sum(complete_classf_inv)/size_reaction_time(1);
+complete_classf_all = ...
+    sum(complete_classf)/size_reaction_time(1) + ... 
+        sum(complete_classf_inv)/size_reaction_time(1);
 
 
