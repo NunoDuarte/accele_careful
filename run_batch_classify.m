@@ -8,24 +8,24 @@ clc
 
 addpath(genpath('functions/'))
 addpath('data')
-addpath('param_KrAc_best/')
+addpath('param/param_KrAc_best/')
 
 % Which Person to choose 
 % [E, F] = read('Kunpeng', 'red-cup');
 [Egan, Fgan, Eneu, Fneu] = readIST_22handovers();
 
 % % remove outliers
-% Eneu{9,3} = [];
-% Fgan{10,1} = [];
-% Egan{10,1} = [];
-% Fneu{11,1} = [];
-% Fneu{11,3} = [];
-% Fneu{11,4} = [];
-% Fneu{11,5} = [];
-% Fneu{12,1} = [];
-% Eneu{12,1} = [];
-% Fgan{12,1} = [];
-% Egan{12,3} = [];
+Eneu{9,3} = [];
+Fgan{10,1} = [];
+Egan{10,1} = [];
+Fneu{11,1} = [];
+Fneu{11,3} = [];
+Fneu{11,4} = [];
+Fneu{11,5} = [];
+Fneu{12,1} = [];
+Eneu{12,1} = [];
+Fgan{12,1} = [];
+Egan{12,3} = [];
 
 %% 
 matrix{1} = Egan;
@@ -107,7 +107,7 @@ for mat=1:4
             tmp = tmp - repmat(tmp(1),1,size(tmp,2));
 
             Data=[];
-            Data = [Data [tmp';0 tmp_d']];       
+            Data = [Data [tmp';0 tmp_d']];     
 
             %% Classify motion
             % initial values
