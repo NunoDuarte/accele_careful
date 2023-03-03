@@ -1,4 +1,4 @@
-# Acceleration Phase Carefulness Detection
+# Carefulness Detection
 Utilize the acceleration phase during handover actions to detect whether the manipulated object is soft/heavy/fragile/risky 
 
 - Eigen vectors in the acceleration phase
@@ -7,7 +7,7 @@ Check that it is solved:
 I have to find a way to get the data to match the eigen vectors. Perhaps smoothing, or time intervals
 
 ## Dependency
-Khansari [SEDS_lib](https://cs.stanford.edu/people/khansari/DSMotions.html)  (so far TODO: remove dependency)
+Khansari [SEDS_lib](https://cs.stanford.edu/people/khansari/DSMotions.html)  (so far TODO: remove dependency -> DONE - need to update)
 
 ## Compatibility
 
@@ -36,5 +36,5 @@ TODO
 
 * Duarte, N. F., Billard, A., & Santos-Victor, J. (2022). The Role of Object Physical Properties in Human Handover Actions: Applications in Robotics. IEEE Transactions on Cognitive and Developmental Systems.
 
-## Relevant Information
+## Related Methodology
 Deceleration phase Approach ([GitHub repository](https://github.com/NunoDuarte/carefull-detection))
