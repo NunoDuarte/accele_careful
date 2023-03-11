@@ -41,8 +41,8 @@ function [train, test] = getData(P)
 %       train{1} = {a{1}, a{2}};
 %       test{1} = {b{1}, b{2}};
 
-    Vtrain = [a2];
-    Vtest = [a1;a3;b1;b2;b3;b4;c1;c2;d1;d2];
+    Vtrain = [a2;c2];
+    Vtest = [a1;a3;b1;b2;b3;b4;c1;d1;d2];
     
     %training set
     for n = 1:size(Vtrain,1)

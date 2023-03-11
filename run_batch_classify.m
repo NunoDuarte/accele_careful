@@ -2,7 +2,6 @@
 %% Load Path
 clear all
 clc
-
 % change to correct directory
 %cd '/home/nuno/Documents/MATLAB/PhD/accele_careful/'
 
