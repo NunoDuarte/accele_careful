@@ -13,9 +13,7 @@ function [train, test] = getData(P)
     d1 = {'David', 'plastic-cup'};
     d2 = {'David', 'red-cup'};
     e1 = {'Salman', 'red-mug'};
-    
-    x = {'All', 'plastic-cup'};
-    
+        
 %     a = {'All', 'plastic-cup'};
 %     b = {'Kunpeng', 'plastic-cup'};
     
